@@ -23,7 +23,7 @@ public class SplashActivity extends MvpAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         imageView = (ImageView) findViewById(R.id.splashView);
-        
+
         imageView.animate().alpha(1.0f).setDuration(1600).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
