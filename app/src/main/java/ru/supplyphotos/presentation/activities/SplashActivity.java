@@ -7,30 +7,41 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import ru.supplyphotos.App;
 import ru.supplyphotos.R;
+import ru.supplyphotos.presentation.presenters.SplashPresenter;
 
 /**
  * @author libgo (05.01.2018)
  */
 
 public class SplashActivity extends MvpAppCompatActivity {
+    @BindView(R.id.splashView)
+    ImageView imageView;
 
-    private ImageView imageView;
-    final Intent intent = new Intent(this, HeadActivity.class);
+    private SplashPresenter splashPresenter = App.getAppComponent().getSplashPresenter();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        imageView = (ImageView) findViewById(R.id.splashView);
-        imageView.setVisibility(View.VISIBLE);
-        imageView.animate().alpha(1.0f).setDuration(1600).setListener(new AnimatorListenerAdapter() {
+        ButterKnife.bind(this);
+        splashPresenter.setView(this);
+        splashPresenter.createView();
+
+    }
+
+    public void startShow(){
+        imageView.animate().alpha(1.0f).setDuration(600).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 imageView.setVisibility(View.VISIBLE);
-                startActivity(intent);
-                finish();
+                splashPresenter.destroyView();
             }
         });
     }

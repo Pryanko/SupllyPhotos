@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 
 import ru.supplyphotos.R;
+import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
 
 /**
  * @author libgo (05.01.2018)
@@ -16,5 +17,11 @@ public class HeadActivity extends MvpAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_head);
+        startShow();
+        
+    }
+
+    private void startShow(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new ManualFragment()).commit();
     }
 }

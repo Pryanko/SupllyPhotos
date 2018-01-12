@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SupllyPhotos.iml" filepath="$PROJECT_DIR$/SupllyPhotos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SupllyPhotos.iml" filepath="$PROJECT_DIR$/.idea/SupllyPhotos.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
