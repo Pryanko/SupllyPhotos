@@ -8,7 +8,7 @@ import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import ru.supplyphotos.data.answers.Manual;
+import ru.supplyphotos.data.answers.manuals.Manual;
 
 import static ru.supplyphotos.constants.Constants.API_URL;
 
@@ -18,8 +18,8 @@ import static ru.supplyphotos.constants.Constants.API_URL;
 
 public interface ApiService {
 
-    @GET("bXSRRXEDpK?indent=2")
-    Observable<List<Manual>> getManuals();
+    @GET("study")
+    Observable<Manual> getManuals();
 
 
     Retrofit retrofit = new Retrofit.Builder()
@@ -30,4 +30,3 @@ public interface ApiService {
 
 }
 
-//   http://www.json-generator.com/api/json/get/bXSRRXEDpK?indent=2

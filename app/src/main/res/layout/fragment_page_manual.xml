@@ -2,40 +2,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fb="http://schemas.android.com/tools">
-    
+   >
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="4dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/header_manual_text"
-         android:textColor="@color/colorAccent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="16dp"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/manual_view"
+        android:layout_width="match_parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_height="wrap_content"
-        android:text="TEXT"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:actualImageScaleType="focusCrop"
+        app:viewAspectRatio="1"
+        app:roundTopLeft="true"
+        app:roundTopRight="true"
+        app:roundedCornerRadius="6dp"/>
 
+        <TextView
+            android:id="@+id/header_manual_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorHeadPrimary"
+            android:layout_above="@+id/manual_view"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:text="@string/text"
+            android:textSize="24sp" />
 
     <TextView
+        android:layout_below="@+id/manual_view"
         android:id="@+id/manual_text"
-         android:textColor="@color/colorAccent"
+        android:gravity="center"
+        android:textColor="@color/colorHeadPrimary"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEXT"/>
-
-
-
-
+        android:text="@string/text"/>
+    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

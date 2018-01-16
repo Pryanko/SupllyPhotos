@@ -20,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.activities.HeadActivity" />
+        <activity android:name=".presentation.activities.HeadActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 </manifest>

@@ -1,16 +1,17 @@
 package ru.supplyphotos.presentation.presenters;
 
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.supplyphotos.data.answers.Manual;
+import ru.supplyphotos.R;
+import ru.supplyphotos.data.answers.manuals.Guide;
+import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.network.ApiService;
 import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
+
 
 /**
  * @autor user on 12.01.2018.
@@ -19,7 +20,8 @@ import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
 public class ManualPresenter implements BasePresenter {
 
     private ManualFragment manualView;
-    private List<Manual> manuals = new ArrayList<>();
+    private List<Guide> guides = new ArrayList<>();
+    private int itemNumber;
 
     public void setView(ManualFragment manualFragment){
         this.manualView = manualFragment;
@@ -27,18 +29,22 @@ public class ManualPresenter implements BasePresenter {
 
     @Override
     public void createView() {
-        ApiService apiService = ApiService.retrofit.create(ApiService.class);
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(apiService.getManuals()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addManualList, this::handleError)
-        );
+        if(getFillList()) {
+            ApiService apiService = ApiService.retrofit.create(ApiService.class);
+            CompositeDisposable compositeDisposable = new CompositeDisposable();
+            compositeDisposable.add(apiService.getManuals()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::addManualList, this::handleError)
+            );
+        }else {
+            playShow();
+        }
     }
     
     @Override
     public void playShow() {
-        manualView.startShow();
+        manualView.startShow(getSizeListManual(), itemNumber, guides);
 
     }
 
@@ -49,26 +55,40 @@ public class ManualPresenter implements BasePresenter {
 
     @Override
     public void destroyView() {
-
+        manualView = null;
     }
 
-    private void addManualList(List<Manual> list){
-        Log.d("ZZZZZ", list.toString());
-        
-        this.manuals = list;
-        Log.d("ZZZZZ", manuals.get(0).getHeader());
+
+
+    private void addManualList(Manual manual){
+        this.guides = manual.getData();
         playShow();
     }
 
-    public Integer getSizeListManual(){
-        return manuals.size();
+    private Integer getSizeListManual(){
+        return guides.size();
     }
 
-    public Manual getManual (int position){
-        return manuals.get(position);
+    private Boolean getFillList(){
+        if(getSizeListManual() == 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+
     }
 
     private void handleError(Throwable throwable) {
         //Обработкой займемся поздней)
     }
+    
+    public void missManual(){
+        manualView.alertShow(manualView.getResources().getString(R.string.alert_show_manual_title),
+                manualView.getResources().getString(R.string.alert_show_manual_message),
+                manualView.getResources().getString(R.string.alert_show_manual_positive_button),
+                manualView.getResources().getString(R.string.alert_show_manual_negative_button));
+    }
+
 }

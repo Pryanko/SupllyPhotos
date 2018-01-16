@@ -1,3 +1,14 @@
 <resources>
+    //app
     <string name="app_name">Suplly Photos</string>
+    <string name="text">TEXT</string>
+    //Alert show manual
+    <string name="alert_show_manual_title">Серьезно?</string>
+    <string name="alert_show_manual_message">Вы хотите пропустить обучение?</string>
+    <string name="alert_show_manual_positive_button">Пропустить</string>
+    <string name="alert_show_manual_negative_button">Продолжить</string>
+
+    //Manual screen
+    <string name="miss">ПРОПУСТИТЬ</string>
+    <string name="next"><![CDATA[ДАЛЕЕ >]]></string>
 </resources>

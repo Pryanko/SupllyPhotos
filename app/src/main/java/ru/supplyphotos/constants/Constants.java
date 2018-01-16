@@ -6,6 +6,7 @@ package ru.supplyphotos.constants;
 
 public class Constants {
 
-    public final static String API_URL = "http://www.json-generator.com/api/json/get/";
+    public final static String API_URL = "http://photo.it33.ru/api/";
+    public final static String GUIDE = "guide";
 
 }
