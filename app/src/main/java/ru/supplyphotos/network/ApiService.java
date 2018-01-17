@@ -5,10 +5,12 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import ru.supplyphotos.data.answers.manuals.Manual;
+import ru.supplyphotos.data.answers.start_login.StartToken;
 
 import static ru.supplyphotos.constants.Constants.API_URL;
 
@@ -21,12 +23,17 @@ public interface ApiService {
     @GET("study")
     Observable<Manual> getManuals();
 
+    @GET("user_new")
+    Observable<StartToken> getDeviceToken();
+
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(API_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            //Для всех запросов используется шедулер созданный выше.
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
 }
+//http://photo.it33.ru/api/user_new
 
