@@ -6,6 +6,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 import ru.supplyphotos.di.components.AppComponent;
 import ru.supplyphotos.di.components.DaggerAppComponent;
+import ru.supplyphotos.di.modules.ContextModule;
 
 
 /**
@@ -21,6 +22,7 @@ public class App extends Application{
         super.onCreate();
 
         appComponent = DaggerAppComponent.builder()
+                .contextModule(new ContextModule(this))
                 .build();
 
         Fresco.initialize(this);
@@ -29,4 +31,6 @@ public class App extends Application{
     public static AppComponent getAppComponent() {
         return appComponent;
     }
+
+
 }

@@ -51,5 +51,6 @@ public class PageManual extends MvpAppCompatFragment {
         headerManualText.setText(guide.getHeader());
         manualText.setText(guide.getText());
         manualView.setImageURI(Uri.parse(guide.getImage480()));
+
     }
 }

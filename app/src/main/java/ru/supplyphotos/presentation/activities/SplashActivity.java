@@ -3,6 +3,7 @@ package ru.supplyphotos.presentation.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,9 +22,8 @@ import ru.supplyphotos.presentation.presenters.SplashPresenter;
 public class SplashActivity extends MvpAppCompatActivity {
     @BindView(R.id.splashView)
     ImageView imageView;
-
+    
     private SplashPresenter splashPresenter = App.getAppComponent().getSplashPresenter();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

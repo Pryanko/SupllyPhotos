@@ -11,6 +11,7 @@ import ru.supplyphotos.data.answers.manuals.Guide;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.network.ApiService;
 import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
+import ru.supplyphotos.rx.RxNetwork;
 
 
 /**
@@ -30,11 +31,8 @@ public class ManualPresenter implements BasePresenter {
     @Override
     public void createView() {
         if(getFillList()) {
-            ApiService apiService = ApiService.retrofit.create(ApiService.class);
             CompositeDisposable compositeDisposable = new CompositeDisposable();
-            compositeDisposable.add(apiService.getManuals()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            compositeDisposable.add(RxNetwork.getGuides()
                     .subscribe(this::addManualList, this::handleError)
             );
         }else {
@@ -76,8 +74,6 @@ public class ManualPresenter implements BasePresenter {
         else {
             return false;
         }
-
-
     }
 
     private void handleError(Throwable throwable) {
