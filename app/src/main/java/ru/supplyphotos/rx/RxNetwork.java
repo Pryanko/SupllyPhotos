@@ -1,7 +1,10 @@
 package ru.supplyphotos.rx;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.answers.start_login.DeviceToken;
 import ru.supplyphotos.network.ApiService;
@@ -23,6 +26,12 @@ public class RxNetwork {
     public static Observable<DeviceToken> getDeviceToken(){
         return apiService.getDeviceToken()
                 .map(Mappers::mapDeviceToken)
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<List<ItemCategory>> getListCategory(){
+        return apiService.getCategory()
+                .map(Mappers::mapListCategory)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

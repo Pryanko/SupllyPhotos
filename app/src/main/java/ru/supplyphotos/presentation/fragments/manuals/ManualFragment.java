@@ -27,6 +27,7 @@ import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.manuals.Guide;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.presentation.adapters.ViewPagerAdapterManual;
+import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
 
 /**
@@ -173,7 +174,7 @@ public class ManualFragment extends MvpAppCompatFragment {
     }
 
     public void closeView(){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new ManualFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new CategoryFragment()).commit();
     }
 
 

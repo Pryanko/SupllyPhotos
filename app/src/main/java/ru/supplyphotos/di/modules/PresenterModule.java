@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import ru.supplyphotos.presentation.presenters.CategoryPresenter;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
 import ru.supplyphotos.presentation.presenters.SplashPresenter;
 
@@ -24,5 +25,11 @@ public class PresenterModule {
     @Singleton
     ManualPresenter manualPresenter() {
         return new ManualPresenter();
+    }
+
+    @Provides
+    @Singleton
+    CategoryPresenter categoryPresenter(){
+        return new CategoryPresenter();
     }
 }

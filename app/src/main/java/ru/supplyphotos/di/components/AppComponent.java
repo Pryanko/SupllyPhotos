@@ -9,6 +9,7 @@ import dagger.Component;
 import ru.supplyphotos.di.modules.ContextModule;
 import ru.supplyphotos.di.modules.PresenterModule;
 import ru.supplyphotos.di.modules.SettingModule;
+import ru.supplyphotos.presentation.presenters.CategoryPresenter;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
 import ru.supplyphotos.presentation.presenters.SplashPresenter;
 import ru.supplyphotos.tools.settings.SettingsHelper;
@@ -23,6 +24,8 @@ public interface AppComponent {
     SplashPresenter getSplashPresenter();
 
     ManualPresenter getManualPresenter();
+
+    CategoryPresenter getCategoryPresenter();
 
     SettingsHelper getSettingsHelper();
 
