@@ -5,31 +5,21 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ru.supplyphotos.presentation.presenters.CategoryPresenter;
+import ru.supplyphotos.presentation.presenters.MainPresenter;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
 import ru.supplyphotos.presentation.presenters.SplashPresenter;
+import ru.supplyphotos.tools.settings.SettingsHelper;
 
 /**
  * @autor user on 12.01.2018.
  */
 @Module
-@Singleton
 public class PresenterModule {
-
+    
     @Provides
-    @Singleton
-    SplashPresenter splashPresenter(){
-        return new SplashPresenter();
-    }
-
-    @Provides
-    @Singleton
-    ManualPresenter manualPresenter() {
-        return new ManualPresenter();
-    }
-
-    @Provides
-    @Singleton
     CategoryPresenter categoryPresenter(){
         return new CategoryPresenter();
     }
+
+
 }

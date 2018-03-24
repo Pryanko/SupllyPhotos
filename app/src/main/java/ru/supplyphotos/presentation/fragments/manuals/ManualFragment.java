@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
@@ -11,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -25,16 +28,31 @@ import info.hoang8f.widget.FButton;
 import ru.supplyphotos.App;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.manuals.Guide;
-import ru.supplyphotos.data.answers.manuals.Manual;
+import ru.supplyphotos.presentation.activities.MainActivity;
 import ru.supplyphotos.presentation.adapters.ViewPagerAdapterManual;
-import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
+import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
+import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
 
 /**
  * @author libgo on 12.01.2018.
  */
 
-public class ManualFragment extends MvpAppCompatFragment {
+public class ManualFragment extends MvpAppCompatFragment
+        implements ContractsFragmentView.ManualView {
+ /*   //BindViewsAlert
+    @BindView(R.id.dialog_manuals_title)
+    TextView textDialogTitle;
+    @BindView(R.id.dialog_manuals_message)
+    TextView textDialogMessage;
+    @BindView(R.id.dialog_positive_button)
+    FButton buttonPositive;
+    @BindView(R.id.dialog_negative_button)
+    FButton buttonNegative;     */
+    /**
+     * Бинды Алерта временно не трогаем
+     */
+
 
     //BindViews
     @BindView(R.id.page_viewer_for_child_manuals)
@@ -47,32 +65,39 @@ public class ManualFragment extends MvpAppCompatFragment {
     FButton buttonMiss;
     @BindView(R.id.button_next)
     FButton buttonNext;
+    @BindView(R.id.progressBarManual)
+    ProgressBar progressBar;
 
 
     private ViewPagerAdapterManual viewPagerAdapterManual;
-    private ManualPresenter manualPresenter = App.getAppComponent().getManualPresenter();
+
+    @InjectPresenter
+    ManualPresenter manualPresenter;
+
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
         viewPagerAdapterManual = new ViewPagerAdapterManual(getChildFragmentManager());
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent_manual, container, false);
         ButterKnife.bind(this, view);
         setRetainInstance(true);
         onListener();
-        manualPresenter.setView(this);
-        manualPresenter.createView();
+
         return view;
     }
 
-
-    public void startShow(int size, int number, List<Guide> list){
+    @Override
+    public void startShow(int size, List<Guide> list){
         //Button init
         buttonMiss.setShadowEnabled(false);
         buttonMiss.setCornerRadius(4);
@@ -83,7 +108,7 @@ public class ManualFragment extends MvpAppCompatFragment {
         //ViewPager fill
         viewPagerAdapterManual.addContentFragments(size, list);
         viewPager.setAdapter(viewPagerAdapterManual);
-        viewPager.setCurrentItem(number);
+        viewPager.setCurrentItem(0);
         stepView.setViewPager(viewPager);
         stepView.setCount(size);
         stepView.setAnimationType(AnimationType.DROP);
@@ -128,8 +153,12 @@ public class ManualFragment extends MvpAppCompatFragment {
         });
     }
 
-
+    @Override
     public void alertShow(String title, String message, String posButton, String negButton){
+
+
+
+
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
@@ -150,6 +179,7 @@ public class ManualFragment extends MvpAppCompatFragment {
         buttonNegative.setButtonColor(0xff6792ff);
         alertDialog.setView(dialogView);
         final AlertDialog dialog = alertDialog.create();
+
         buttonPositive.setOnClickListener(v -> {
             dialog.cancel();
             closeView();
@@ -171,12 +201,31 @@ public class ManualFragment extends MvpAppCompatFragment {
     public void onDestroy() {
         super.onDestroy();
         Log.d("CLOSE", "YES");
+        if(getActivity() != null){
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.setVisibilityToolbar(true);
+        }
     }
 
     public void closeView(){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new CategoryFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new HeadFragment()).commit();
     }
 
 
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void showLoading(boolean loading) {
+        if (loading){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        else {
+            progressBar.setVisibility(View.GONE);
+        }
+
+    }
 
 }

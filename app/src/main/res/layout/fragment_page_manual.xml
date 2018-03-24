@@ -19,7 +19,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/header_manual_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorHeadPrimary"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:text="@string/text"
+            android:textSize="24sp" />
+
     <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_below="@+id/header_manual_text"
         android:id="@+id/manual_view"
         android:layout_width="match_parent"
         android:layout_marginStart="4dp"
@@ -34,18 +49,7 @@
         app:roundTopRight="true"
         app:roundedCornerRadius="6dp"/>
 
-        <TextView
-            android:id="@+id/header_manual_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorHeadPrimary"
-            android:layout_above="@+id/manual_view"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center"
-            android:text="@string/text"
-            android:textSize="24sp" />
+
 
     <TextView
         android:layout_below="@+id/manual_view"

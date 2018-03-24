@@ -5,6 +5,8 @@ import java.util.List;
 
 import ru.supplyphotos.data.answers.category.Category;
 import ru.supplyphotos.data.answers.category.ItemCategory;
+import ru.supplyphotos.data.answers.services.ItemService;
+import ru.supplyphotos.data.answers.services.Services;
 import ru.supplyphotos.data.answers.start_login.DeviceToken;
 import ru.supplyphotos.data.answers.start_login.StartToken;
 
@@ -19,7 +21,11 @@ public class Mappers {
      }
 
      public static List<ItemCategory> mapListCategory(Category category){
-         return category.getListCategory();
-     }
+        return category.getListCategory();
+    }
+
+    public static List<ItemService> mapListCategory(Services itemService){
+        return itemService.getData();
+    }
 
 }

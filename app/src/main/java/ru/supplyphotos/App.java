@@ -7,6 +7,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import ru.supplyphotos.di.components.AppComponent;
 import ru.supplyphotos.di.components.DaggerAppComponent;
 import ru.supplyphotos.di.modules.ContextModule;
+import ru.supplyphotos.di.modules.SettingModule;
 
 
 /**

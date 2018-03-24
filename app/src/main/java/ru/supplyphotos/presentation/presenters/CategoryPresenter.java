@@ -1,51 +1,49 @@
 package ru.supplyphotos.presentation.presenters;
 
+
+
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 import io.reactivex.disposables.CompositeDisposable;
+import ru.supplyphotos.App;
 import ru.supplyphotos.data.answers.category.ItemCategory;
-import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
-import ru.supplyphotos.rx.RxNetwork;
+import ru.supplyphotos.data.repository.AppRepository;
+import ru.supplyphotos.presentation.adapters.ContractsAdapters;
+import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
+import ru.supplyphotos.tools.settings.SettingInterface;
 
 /**
  * @author Libgo on 20.01.2018.
  */
+@InjectViewState
+public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.CategoryView>
+        implements BasePresenter, ContractsAdapters.ItemCategoryTouch {
 
-public class CategoryPresenter implements BasePresenter {
 
-    private  CategoryFragment categoryFragment;
-    private List<ItemCategory> list = new ArrayList<>();
 
-    public void setView(CategoryFragment fragment){
-        this.categoryFragment = fragment;
-    }
-
-    private void setList(List<ItemCategory> itemCategoryList){
-        this.list = itemCategoryList;
-        Log.d("LIST", list.toString());
-    }
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private AppRepository appRepository = App.getAppComponent().getAppRepository();
+    private SettingInterface settingInterface = App.getAppComponent().getSettingsHelper()
+            .getSettingsInterface();
 
     @Override
-    public void createView() {
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        compositeDisposable.add(appRepository.getListCategory()
+                .subscribe(list -> getViewState().startShow(list), this::handleError));
 
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(RxNetwork.getListCategory()
-                .doOnNext(this::setList)
-                .subscribe(deviceToken -> playShow(), this::handleError));
-
-
+        getViewState().setTouchItemAdapter(this);
     }
+
+
+
 
     private void handleError(Throwable throwable) {
     }
 
-    @Override
-    public void playShow() {
-        categoryFragment.startShow(list);
-    }
+
 
     @Override
     public void onError() {
@@ -54,6 +52,20 @@ public class CategoryPresenter implements BasePresenter {
 
     @Override
     public void destroyView() {
-         categoryFragment = null;
+        compositeDisposable.dispose();
+    }
+
+
+    @Override
+    public void touchItemCategory(ItemCategory itemCategory) {
+        if(itemCategory != null){
+        settingInterface.saveSelectedItemCategory(itemCategory);
+        getViewState().next();
+            Log.d("ПРОВЕРКА", itemCategory.getName());
+        }
+
     }
 }
+
+
+

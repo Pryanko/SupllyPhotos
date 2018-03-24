@@ -1,51 +1,62 @@
 package ru.supplyphotos.presentation.presenters;
 
-import android.content.Intent;
+
 import android.util.Log;
 
-import io.reactivex.disposables.CompositeDisposable;
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
+import io.reactivex.disposables.Disposable;
 import ru.supplyphotos.App;
-import ru.supplyphotos.presentation.activities.HeadActivity;
-import ru.supplyphotos.presentation.activities.SplashActivity;
+import ru.supplyphotos.presentation.activities.BaseViewActivity;
 import ru.supplyphotos.rx.RxNetwork;
+import ru.supplyphotos.tools.settings.SettingInterface;
 import ru.supplyphotos.tools.settings.SettingsHelper;
+import ru.supplyphotos.tools.utils.TokenUtils;
 
 /**
  * @author libgo (05.01.2018)
  */
+@InjectViewState
+public class SplashPresenter extends MvpPresenter<BaseViewActivity> implements BasePresenter{
 
-public class SplashPresenter implements BasePresenter{
+    private Disposable disposable;
+    private SettingInterface settingInterface;
 
-    private SplashActivity splashView;
-    private SettingsHelper settingsHelper;
-
-    public void setView(SplashActivity splashActivity){
-        this.splashView = splashActivity;
-        settingsHelper = App.getAppComponent().getSettingsHelper();
+    public SplashPresenter() {
+        this.settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
     }
 
     @Override
-    public void createView() {
-        if(settingsHelper.getBooleanRun()){
-            playShow();
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        startingApp();
+
+    }
+
+    private void startingApp(){
+        
+        if(settingInterface.getBooleanRun()){
+            playShowLaunch(settingInterface.getBooleanRun());
         }else {
-            Log.d("BOOLEAN", String.valueOf(settingsHelper.getBooleanRun()));
-            CompositeDisposable compositeDisposable = new CompositeDisposable();
-            compositeDisposable.add(RxNetwork.getDeviceToken()
-                    .doOnNext(deviceToken -> settingsHelper.setDeviceToken(deviceToken, true))
-                    .subscribe(deviceToken -> playShow(), this::handleError)
+            Log.d("BOOLEAN", String.valueOf(settingInterface.getBooleanRun()));
+            disposable = (RxNetwork.getDeviceToken()
+                    .doOnNext(deviceToken -> settingInterface.setDeviceToken(deviceToken))
+                    .flatMap(TokenUtils::getFlagValidToken)
+                    .subscribe(this::playShowLaunch, this::handleError)
             );
         }
 
     }
-    @Override
-    public void playShow() {
-        if(settingsHelper.getBooleanRun()) {
-            Log.d("BOOLEAN", String.valueOf(settingsHelper.getBooleanRun()));
-            splashView.startShow();
+
+    private void playShowLaunch(Boolean run) {
+        
+        if(run) {
+            Log.d("BOOLEAN", String.valueOf(settingInterface.getBooleanRun()));
+            getViewState().startShow();
         }
     }
 
+    //implements
     @Override
     public void onError() {
 
@@ -53,11 +64,11 @@ public class SplashPresenter implements BasePresenter{
 
     @Override
     public void destroyView() {
-        Intent intent = new Intent(splashView, HeadActivity.class);
-        splashView.startActivity(intent);
-        splashView.finish();
-        settingsHelper = null;
-        splashView = null;
+        /*if(!disposable.isDisposed()){
+            disposable.dispose();
+        }     */
+
+        getViewState().closeScreen();
     }
 
     private void handleError(Throwable throwable) {

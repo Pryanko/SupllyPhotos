@@ -9,4 +9,11 @@
         <item name="android:fontFamily" tools:ignore="NewApi">@font/roboto_bold</item>
     </style>
 
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light">
+
+
+    <item name="closeIcon">@drawable/ic_rounded_icon_set_arrow_left</item>
+    </style>
+
 </resources>

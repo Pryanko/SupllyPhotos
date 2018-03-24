@@ -1,5 +1,6 @@
 package ru.supplyphotos.presentation.adapters;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +16,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.category.ItemCategory;
+import ru.supplyphotos.presentation.adapters.ContractsAdapters.ItemCategoryTouch;
 
 /**
  * @author Libgo on 20.01.2018.
  */
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>  {
 
     private List<ItemCategory> categoryList = new ArrayList<>();
-
+    private ItemCategoryTouch itemCategoryTouch;
 
     public void addCategoryList(List<ItemCategory> list){
         if (categoryList.size() == 0){
@@ -31,6 +33,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         }
         notifyDataSetChanged();
+    }
+
+    public void setItemCategoryTouch(ItemCategoryTouch itemCategoryTouch){
+        this.itemCategoryTouch = itemCategoryTouch;
     }
     
     @Override
@@ -47,6 +53,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         ItemCategory itemCategory = categoryList.get(position);
         holder.textCardCategory.setText(itemCategory.getName());
         holder.categoryCardImage.setImageURI(itemCategory.getImage480());
+        holder.categoryCard.setOnClickListener(v -> itemCategoryTouch
+                .touchItemCategory(itemCategory));
+
     }
 
 
@@ -64,6 +73,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
          SimpleDraweeView categoryCardImage;
          @BindView(R.id.text_card_category)
          TextView textCardCategory;
+         @BindView(R.id.card_category)
+         CardView categoryCard;
+         
 
         ViewHolder(View itemView) {
             super(itemView);
