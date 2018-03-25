@@ -19,19 +19,24 @@ import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.data.resource.ResourceManager;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.rx.RxNetwork;
+import ru.terrakok.cicerone.Router;
+
+import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
 
 
 /**
  * @autor user on 12.01.2018.
  */
 @InjectViewState
-public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualView> implements BasePresenter {
+public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualView> implements BasePresenter.Manual {
 
 
     private AppRepository appRepository;
     private ResourceManager resourceManager;
+    private Router router;
 
     public ManualPresenter() {
+        this.router = App.getAppComponent().getRouter();
         this.appRepository = App.getAppComponent().getAppRepository();
         this.resourceManager = App.getAppComponent().getResourceManager();
 
@@ -45,19 +50,22 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
 
     }
 
+
+    public void nextScreen(){
+        router.newRootScreen(CATEGORY_SCREEN);
+
+    }
+
     private void showView() {
 
         Disposable disposable = appRepository.getGuides()
                 .subscribe(this::startViewShow, this::handleError);
     }
 
-    private void startViewShow(Manual manual){
+    private void startViewShow(Manual manual) {
         getViewState().startShow(manual.getData().size(),manual.getData());
         getViewState().showLoading(false);
-
     }
-    
-
 
 
     @Override

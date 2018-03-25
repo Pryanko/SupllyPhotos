@@ -23,7 +23,7 @@
 
     <View
         android:id="@+id/view_image"
-        android:background="@color/colorViewService"
+        android:background="#c8fdbe0f"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="@id/head_service_image"

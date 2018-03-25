@@ -17,7 +17,7 @@ import ru.supplyphotos.tools.settings.SettingInterface;
  */
 @InjectViewState
 public class ServicePresenter extends MvpPresenter<ContractsFragmentView.ServiceView>
-        implements BasePresenter {
+        implements BasePresenter.Contracts {
 
     private SettingInterface settingInterface;
     private AppRepository appRepository;

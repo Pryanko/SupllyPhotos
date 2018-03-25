@@ -22,4 +22,12 @@ public class Constants {
     public final static String ITEM_CATEGORY_ID = "Item_category_id";
     public final static String IMAGE_SERVICE_HEAD = "Image_head_category_url";
 
+
+
+
+    //Names Screens
+    public final static String CATEGORY_SCREEN = "CATEGORY_SCREEN";
+    public final static String SERVICES_SCREEN = "SERVICES_SCREEN";
+    public final static String MANUAL_SCREEN = "MANUAL_SCREEN";
+
 }

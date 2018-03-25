@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
@@ -27,6 +29,7 @@ import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
 import ru.supplyphotos.presentation.presenters.CategoryPresenter;
+import ru.terrakok.cicerone.Router;
 
 /**
  * @author Libgo on 20.01.2018.
@@ -34,13 +37,13 @@ import ru.supplyphotos.presentation.presenters.CategoryPresenter;
 
 public class CategoryFragment extends MvpAppCompatFragment implements
         ContractsFragmentView.CategoryView{
+    
     //Bind
-    @BindView(R.id.category_top_image)
-    SimpleDraweeView categoryTopImage;
     @BindView(R.id.category_recycler)
     RecyclerView categoryRecycler;
 
     private CategoryAdapter categoryAdapter;
+
     
 
     @InjectPresenter
@@ -51,7 +54,9 @@ public class CategoryFragment extends MvpAppCompatFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         categoryAdapter = new CategoryAdapter();
+
 
     }
 
@@ -61,9 +66,16 @@ public class CategoryFragment extends MvpAppCompatFragment implements
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         ButterKnife.bind(this, view);
         categoryRecycler.addItemDecoration(new SpaceDecoration(12));
-        categoryRecycler.setNestedScrollingEnabled(false);
-        categoryRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        categoryRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        menu.findItem(R.id.shop_button);
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override
@@ -92,9 +104,7 @@ public class CategoryFragment extends MvpAppCompatFragment implements
 
     }
 
-    public void next(){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new ServiceFragment()).commit();
-    }
+
 
     @Override
     public void showLoading(boolean loading) {

@@ -13,20 +13,33 @@ import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
+import ru.terrakok.cicerone.Router;
+
+import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 
 /**
  * @author Libgo on 20.01.2018.
  */
 @InjectViewState
 public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.CategoryView>
-        implements BasePresenter, ContractsAdapters.ItemCategoryTouch {
+        implements BasePresenter.Category, ContractsAdapters.ItemCategoryTouch {
 
 
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private AppRepository appRepository = App.getAppComponent().getAppRepository();
-    private SettingInterface settingInterface = App.getAppComponent().getSettingsHelper()
-            .getSettingsInterface();
+    private CompositeDisposable compositeDisposable;
+    private AppRepository appRepository;
+    private SettingInterface settingInterface;
+    private Router router;
+
+
+    public CategoryPresenter() {
+           router = App.getAppComponent().getRouter();
+           compositeDisposable = new CompositeDisposable();
+           appRepository = App.getAppComponent().getAppRepository();
+           settingInterface = App.getAppComponent().getSettingsHelper()
+                .getSettingsInterface();
+    }
+
 
     @Override
     protected void onFirstViewAttach() {
@@ -60,10 +73,15 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
     public void touchItemCategory(ItemCategory itemCategory) {
         if(itemCategory != null){
         settingInterface.saveSelectedItemCategory(itemCategory);
-        getViewState().next();
+        nextScreen();
             Log.d("ПРОВЕРКА", itemCategory.getName());
         }
 
+    }
+
+    @Override
+    public void nextScreen() {
+       router.navigateTo(SERVICES_SCREEN);
     }
 }
 

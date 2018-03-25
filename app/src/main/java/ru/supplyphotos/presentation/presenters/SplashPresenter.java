@@ -17,7 +17,7 @@ import ru.supplyphotos.tools.utils.TokenUtils;
  * @author libgo (05.01.2018)
  */
 @InjectViewState
-public class SplashPresenter extends MvpPresenter<BaseViewActivity> implements BasePresenter{
+public class SplashPresenter extends MvpPresenter<BaseViewActivity> implements BasePresenter.Contracts{
 
     private Disposable disposable;
     private SettingInterface settingInterface;

@@ -2,11 +2,14 @@ package ru.supplyphotos.presentation.activities;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -56,8 +59,17 @@ import ru.supplyphotos.network.ApiService;
 import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
 import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
+import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
 import ru.supplyphotos.presentation.presenters.MainPresenter;
 import ru.supplyphotos.tools.utils.PathUtils;
+import ru.terrakok.cicerone.Navigator;
+import ru.terrakok.cicerone.android.SupportAppNavigator;
+import ru.terrakok.cicerone.android.SupportFragmentNavigator;
+import ru.terrakok.cicerone.commands.Command;
+
+import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
+import static ru.supplyphotos.constants.Constants.MANUAL_SCREEN;
+import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 
 
 /**
@@ -68,22 +80,66 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @BindView(R.id.main_toolBar)
     Toolbar toolbar;
-    
+
     @InjectPresenter
     MainPresenter mainPresenter;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
-    }
+    private Navigator navigator = new SupportFragmentNavigator(getSupportFragmentManager(),
+            R.id.frame_for_fragments) {
 
 
+        @Override
+        protected Fragment createFragment(String screenKey, Object data) {
+            switch (screenKey) {
+                case CATEGORY_SCREEN:
+                    return new CategoryFragment();
+                case SERVICES_SCREEN:
+                    return new ServiceFragment();
+                case MANUAL_SCREEN:
+                    return new ManualFragment();
+                default:
+                    throw new RuntimeException("“Unknown screen key!”");
+            }
+        }
 
-  /*  @Override
+        @Override
+        protected void showSystemMessage(String message) {
+
+        }
+
+        @Override
+        protected void exit() {
+
+        }
+    };
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            ButterKnife.bind(this);
+            setSupportActionBar(toolbar);
+            toolbar.setBackgroundColor(Color.parseColor("#ffffff"));
+            toolbar.setTitleTextColor(Color.parseColor("#ffbe75"));
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_account));
+            getSupportActionBar().setTitle("I Love Print my Photos");
+            
+
+        }
+
+        @Override
+        protected void onResume() {
+            super.onResume();
+            App.getAppComponent().getNavigatorHolder().setNavigator(navigator);
+        }
+
+        @Override
+        protected void onPause() {
+            super.onPause();
+            App.getAppComponent().getNavigatorHolder().removeNavigator();
+        }
+
+    /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
@@ -92,32 +148,28 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         Log.d("menuItem", menuItem.toString());
         ImageView view = (ImageView) menuItem.getActionView();
         Log.d("VIEW", view.toString());
-        new QBadgeView(this).bindTarget(view).setBadgeNumber(5);
+       // new QBadgeView(this).bindTarget(view).setBadgeNumber(5);
 
         
-        return true;
-    }   */
+        return true; 
+    } */
 
-    @Override
-    public void startShow(boolean firstRun) {
-        if (firstRun){
-           getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new CategoryFragment()).commit();
-           setVisibilityToolbar(true);
+        @Override
+        public void startShow(boolean firstRun) {
+            if (firstRun) {
+                setVisibilityToolbar(firstRun);
+            } else {
+                setVisibilityToolbar(firstRun);
+            }
         }
-        else{
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new ManualFragment()).commit();
-            setVisibilityToolbar(false);
-        }
-    }
 
-    public void setVisibilityToolbar(boolean visibilityToolbar){
-        if(visibilityToolbar){
-           toolbar.setVisibility(View.VISIBLE);
+        public void setVisibilityToolbar(boolean visibilityToolbar) {
+            if (visibilityToolbar) {
+                toolbar.setVisibility(View.VISIBLE);
+            } else {
+                toolbar.setVisibility(View.GONE);
+            }
         }
-        else {
-           toolbar.setVisibility(View.GONE);
-        }
-    }
 
 
    /* @Override
@@ -129,6 +181,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         }
         return  true;
     } */
+
+
 }
 
 

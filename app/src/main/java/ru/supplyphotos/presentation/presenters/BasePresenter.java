@@ -8,11 +8,20 @@ import com.arellomobile.mvp.MvpPresenter;
 
 public interface BasePresenter  {
 
+    interface Category extends NavigationScreen{
+    }
 
+    interface Manual extends  NavigationScreen{
+    }
 
+    interface NavigationScreen extends Contracts{
+        void nextScreen();
+    }
 
-    void onError();
+    interface Contracts {
+        void onError();
 
-    void destroyView();
+        void destroyView();
+    }
 
 }

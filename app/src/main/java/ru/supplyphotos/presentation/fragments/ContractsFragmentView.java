@@ -1,6 +1,9 @@
 package ru.supplyphotos.presentation.fragments;
 
 import com.arellomobile.mvp.MvpView;
+import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import java.util.List;
 
@@ -23,9 +26,9 @@ public interface ContractsFragmentView {
 
         void setTouchItemAdapter(ContractsAdapters.ItemCategoryTouch itemCategoryTouch);
 
+        
         void startShow(List<ItemCategory> list);
-
-        void next();
+        
     }
 
 
@@ -49,8 +52,9 @@ public interface ContractsFragmentView {
 
     }
 
-
+    @StateStrategyType(AddToEndStrategy.class)
     interface BaseViewFragment extends MvpView {
+
 
         void onError();
 

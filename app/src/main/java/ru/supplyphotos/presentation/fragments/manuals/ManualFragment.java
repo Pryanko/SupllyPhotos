@@ -182,7 +182,8 @@ public class ManualFragment extends MvpAppCompatFragment
 
         buttonPositive.setOnClickListener(v -> {
             dialog.cancel();
-            closeView();
+            manualPresenter.nextScreen();
+            
         });
         buttonNegative.setOnClickListener(v -> dialog.cancel());
         dialog.show();
@@ -207,9 +208,7 @@ public class ManualFragment extends MvpAppCompatFragment
         }
     }
 
-    public void closeView(){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_for_fragments, new HeadFragment()).commit();
-    }
+
 
 
     @Override
