@@ -14,6 +14,7 @@ import ru.supplyphotos.tools.settings.SettingsHelper;
 import ru.terrakok.cicerone.Router;
 
 import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
+import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
 import static ru.supplyphotos.constants.Constants.MANUAL_SCREEN;
 
 /**
@@ -44,6 +45,7 @@ public class MainPresenter  extends MvpPresenter<MainView> implements BasePresen
     private void start(boolean firstRun){
         if (firstRun) {
             router.newRootScreen(CATEGORY_SCREEN);
+           //router.newRootScreen(HEAD_SCREEN);
         } else {
             router.replaceScreen(MANUAL_SCREEN);
         }

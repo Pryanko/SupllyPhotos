@@ -1,73 +1,29 @@
 package ru.supplyphotos.presentation.activities;
 
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenterTag;
-import com.facebook.imagepipeline.nativecode.ImagePipelineNativeLoader;
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
-
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.vistrav.ask.Ask;
-import com.vistrav.ask.annotations.AskDenied;
-import com.vistrav.ask.annotations.AskGranted;
-
-import java.io.File;
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import q.rorbin.badgeview.QBadgeView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ru.supplyphotos.App;
 import ru.supplyphotos.R;
-import ru.supplyphotos.design.AppDrawerBuilder;
-import ru.supplyphotos.network.ApiService;
 import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
 import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
 import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
 import ru.supplyphotos.presentation.presenters.MainPresenter;
-import ru.supplyphotos.tools.utils.PathUtils;
 import ru.terrakok.cicerone.Navigator;
-import ru.terrakok.cicerone.android.SupportAppNavigator;
 import ru.terrakok.cicerone.android.SupportFragmentNavigator;
-import ru.terrakok.cicerone.commands.Command;
 
 import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
+import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
 import static ru.supplyphotos.constants.Constants.MANUAL_SCREEN;
 import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 
@@ -92,11 +48,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         protected Fragment createFragment(String screenKey, Object data) {
             switch (screenKey) {
                 case CATEGORY_SCREEN:
+
                     return new CategoryFragment();
                 case SERVICES_SCREEN:
                     return new ServiceFragment();
                 case MANUAL_SCREEN:
                     return new ManualFragment();
+                case HEAD_SCREEN:
+                    Toast.makeText(getApplication(), "Ололо", Toast.LENGTH_LONG).show();
+                    return new HeadFragment();
                 default:
                     throw new RuntimeException("“Unknown screen key!”");
             }
@@ -109,7 +69,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
         @Override
         protected void exit() {
-
+             App.getAppComponent().getRouter().exit();
         }
     };
 

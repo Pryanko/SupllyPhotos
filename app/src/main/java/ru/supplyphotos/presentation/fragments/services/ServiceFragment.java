@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.services.ItemService;
 import ru.supplyphotos.data.settings.SelectedItemCategory;
+import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.adapters.ServiceAdapter;
 import ru.supplyphotos.presentation.adapters.decoration.SpaceDecoration;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
@@ -32,6 +33,7 @@ import ru.supplyphotos.presentation.presenters.ServicePresenter;
 
 public class ServiceFragment extends MvpAppCompatFragment
         implements ContractsFragmentView.ServiceView {
+
 
     //BindViews
     @BindView(R.id.text_service_head_image)
@@ -74,6 +76,11 @@ public class ServiceFragment extends MvpAppCompatFragment
     @Override
     public void showLoading(boolean loading) {
 
+    }
+
+    @Override
+    public void delegateTouchItemAdapter(ContractsAdapters.ItemServiceTouch itemServiceTouch) {
+        serviceAdapter.setItemServiceTouch(itemServiceTouch);
     }
 
     @Override

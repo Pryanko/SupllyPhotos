@@ -15,4 +15,10 @@ public interface ContractsAdapters {
 
     }
 
+    interface ItemServiceTouch {
+
+        void touchItemService(Integer service_id);
+
+    }
+
 }

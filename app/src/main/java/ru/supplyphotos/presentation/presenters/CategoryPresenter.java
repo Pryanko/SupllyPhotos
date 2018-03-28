@@ -46,8 +46,7 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
         super.onFirstViewAttach();
         compositeDisposable.add(appRepository.getListCategory()
                 .subscribe(list -> getViewState().startShow(list), this::handleError));
-
-        getViewState().setTouchItemAdapter(this);
+        getViewState().delegateTouchItemAdapter(this);
     }
 
 

@@ -3,10 +3,12 @@ package ru.supplyphotos.di.modules;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.Reusable;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.resource.ResourceManager;
 import ru.supplyphotos.presentation.activities.MainActivity;

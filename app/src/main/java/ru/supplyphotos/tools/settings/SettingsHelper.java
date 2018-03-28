@@ -14,6 +14,7 @@ import static ru.supplyphotos.constants.Constants.DEVICE_NAME;
 import static ru.supplyphotos.constants.Constants.DEVICE_TOKEN;
 import static ru.supplyphotos.constants.Constants.IMAGE_SERVICE_HEAD;
 import static ru.supplyphotos.constants.Constants.ITEM_CATEGORY_ID;
+import static ru.supplyphotos.constants.Constants.ITEM_SERVICE_ID;
 
 /**
  * @author Libgo on 17.01.2018.
@@ -72,6 +73,13 @@ public class SettingsHelper implements SettingInterface {
     @Override
     public SettingInterface getSettingsInterface() {
         return this;
+    }
+
+    @Override
+    public void saveSelectedServiceId(Integer service_id) {
+        SharedPreferences.Editor settingEditor = sharedPreferences.edit();
+        settingEditor.putInt(ITEM_SERVICE_ID, service_id);
+        settingEditor.apply();
     }
 
 }

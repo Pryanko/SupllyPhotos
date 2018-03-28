@@ -95,7 +95,7 @@ public class CategoryFragment extends MvpAppCompatFragment implements
         categoryPresenter.destroyView();
     }
 
-    public void setTouchItemAdapter(ContractsAdapters.ItemCategoryTouch itemCategoryTouch){
+    public void delegateTouchItemAdapter(ContractsAdapters.ItemCategoryTouch itemCategoryTouch){
         categoryAdapter.setItemCategoryTouch(itemCategoryTouch);
     }
 

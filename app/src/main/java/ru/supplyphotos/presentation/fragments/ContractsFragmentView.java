@@ -24,9 +24,8 @@ public interface ContractsFragmentView {
 
     interface CategoryView extends BaseViewFragment {
 
-        void setTouchItemAdapter(ContractsAdapters.ItemCategoryTouch itemCategoryTouch);
+        void delegateTouchItemAdapter(ContractsAdapters.ItemCategoryTouch itemCategoryTouch);
 
-        
         void startShow(List<ItemCategory> list);
         
     }
@@ -38,6 +37,8 @@ public interface ContractsFragmentView {
     }
 
     interface ServiceView extends BaseViewFragment{
+
+        void delegateTouchItemAdapter(ContractsAdapters.ItemServiceTouch itemServiceTouch);
 
         void testStart(SelectedItemCategory selectedItemCategory,  List<ItemService> list);
 

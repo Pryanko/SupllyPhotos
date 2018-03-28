@@ -1,6 +1,7 @@
 package ru.supplyphotos.presentation.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import ru.supplyphotos.data.answers.services.ItemService;
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHolder> {
 
     private List<ItemService> serviceList = new ArrayList<>();
-
+    ContractsAdapters.ItemServiceTouch itemServiceTouch;
 
     @NonNull
     @Override
@@ -30,6 +31,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.service_card_item, parent, false);
         return new ViewHolder(view);
+    }
+
+    public void setItemServiceTouch(ContractsAdapters.ItemServiceTouch itemServiceTouch) {
+        this.itemServiceTouch = itemServiceTouch;
     }
 
     public void updateList(List<ItemService> list){
@@ -41,6 +46,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
     public void onBindViewHolder(@NonNull ServiceAdapter.ViewHolder holder, int position) {
         holder.textView_name.setText(serviceList.get(position).getName());
         holder.textView_price.setText(serviceList.get(position).getPrice());
+        holder.service_card.setOnClickListener(v -> itemServiceTouch
+                .touchItemService(serviceList.get(position).getId()));
 
     }
 
@@ -58,6 +65,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
         TextView textView_name;
         @BindView(R.id.text_price)
         TextView textView_price;
+        @BindView(R.id.card_service)
+        CardView service_card;
 
 
         public ViewHolder(View itemView) {

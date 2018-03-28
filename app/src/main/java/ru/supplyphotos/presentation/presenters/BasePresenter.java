@@ -8,6 +8,13 @@ import com.arellomobile.mvp.MvpPresenter;
 
 public interface BasePresenter  {
 
+    interface Gallery extends Contracts{
+
+        void loadImage();
+
+    }
+
+
     interface Category extends NavigationScreen{
     }
 

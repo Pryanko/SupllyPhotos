@@ -22,5 +22,7 @@ public interface SettingInterface {
 
     SettingInterface getSettingsInterface();
 
+    void saveSelectedServiceId(Integer service_id);
+
 
 }

@@ -15,11 +15,6 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
-            android:screenOrientation="portrait"
-            android:exported="true"
-            android:theme="@style/Theme.Design.NoActionBar"/>
         <activity android:name=".presentation.activities.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>

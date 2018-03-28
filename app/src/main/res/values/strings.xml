@@ -12,4 +12,6 @@
     <string name="miss">ПРОПУСТИТЬ</string>
     <string name="next"><![CDATA[ДАЛЕЕ >]]></string>
     <string name="back">back</string>
+    <string name="phone">phone</string>
+    <string name="VK">VK</string>
 </resources>
