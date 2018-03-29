@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_phone"
         android:icon="@android:drawable/ic_dialog_map"
+        android:enabled="true"
+        app:showAsAction="always"
         android:title="@string/phone"/>
     <item
         android:id="@+id/action_vk"
         android:icon="@android:drawable/ic_dialog_dialer"
+        android:enabled="true"
+        app:showAsAction="always"
         android:title="@string/VK" />
 
     <item
         android:id="@+id/action_instagram"
         android:icon="@android:drawable/ic_dialog_email"
+        android:enabled="true"
+        app:showAsAction="always"
         android:title="@string/VK" />
 
 </menu>
