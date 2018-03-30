@@ -43,8 +43,8 @@ dependencies {
 
 
 
-    //NOT
-    implementation 'com.vistrav:ask:2.5'
+    // image loading library Glide itself
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
 
     //MVP
     implementation "com.arello-mobile:moxy-app-compat:1.5.3"

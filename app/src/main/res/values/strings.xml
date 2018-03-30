@@ -9,9 +9,14 @@
     <string name="alert_show_manual_negative_button">Продолжить</string>
 
     //Manual screen
+
     <string name="miss">ПРОПУСТИТЬ</string>
     <string name="next"><![CDATA[ДАЛЕЕ >]]></string>
     <string name="back">back</string>
-    <string name="phone">phone</string>
-    <string name="VK">VK</string>
+
+    //Gallery
+    <string name="phone">Phone</string>
+    <string name="VK">Vk</string>
+    <string name="INSTAGRAM">Instagram</string>
+    <string name="wait">Раздел находится в разработке</string>
 </resources>

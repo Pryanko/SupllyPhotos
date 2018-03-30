@@ -6,8 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,11 @@ import butterknife.ButterKnife;
 import ru.supplyphotos.R;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 
-import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
+
+import ru.supplyphotos.presentation.fragments.head.gallery_fragments.InstagramGalleryFragment;
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.PhoneGalleryFragment;
-import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
+import ru.supplyphotos.presentation.fragments.head.gallery_fragments.VkGalleryFragment;
+
 
 
 /**
@@ -43,7 +44,6 @@ public class HeadFragment extends MvpAppCompatFragment
         View view = inflater.inflate(R.layout.fragment_head, container, false);
         ButterKnife.bind(this,view);
         setHasOptionsMenu(true);
-
         getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new PhoneGalleryFragment()).commit();
         return view;
     }
@@ -57,34 +57,6 @@ public class HeadFragment extends MvpAppCompatFragment
     }
 
     private void initListener() {
-        bottomBar.setOnNavigationItemReselectedListener(item -> {switch (item.getItemId()) {
-
-            case R.id.action_phone:
-                getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new PhoneGalleryFragment()).commit();
-                bottomBar.getMenu().getItem(0).setChecked(true);
-                Log.d("!@#$", "!$!@$@!");
-                break;
-
-            case R.id.action_vk:
-                getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new CategoryFragment()).commit();
-                Log.d("!@#$", "!$!@$@!");
-                bottomBar.getMenu().getItem(1).setChecked(true);
-                break;
-
-            case R.id.action_instagram:
-                getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new ServiceFragment()).commit();
-                Log.d("!@#$", "!$!@$@!");
-                bottomBar.getMenu().getItem(2).setChecked(true);
-                break;
-
-        }
-
-        });
-
-
-
-
-
 
        bottomBar.setOnNavigationItemSelectedListener((MenuItem item) -> {
             
@@ -92,23 +64,22 @@ public class HeadFragment extends MvpAppCompatFragment
                 case R.id.action_phone:
 
                     getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new PhoneGalleryFragment()).commit();
-                    Log.d("!@#$", "!$!@$@!");
+
                     break;
 
                 case R.id.action_vk:
-                    getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new CategoryFragment()).commit();
-                    Log.d("!@#$", "!$!@$@!");
-                     item.isChecked();
+                    getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new VkGalleryFragment()).commit();
+
                     break;
 
                 case R.id.action_instagram:
                     
-                    getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new ServiceFragment()).commit();
-                    Log.d("!@#$", "!$!@$@!");
+                    getChildFragmentManager().beginTransaction().replace(R.id.frame_for_child_fragments, new InstagramGalleryFragment()).commit();
+
                     break;
 
             }
-            return false;
+            return true;
         });
     }
 

@@ -7,6 +7,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import io.reactivex.disposables.Disposable;
 import ru.supplyphotos.App;
+import ru.supplyphotos.data.storage.StorageManager;
 import ru.supplyphotos.presentation.activities.BaseViewActivity;
 import ru.supplyphotos.rx.RxNetwork;
 import ru.supplyphotos.tools.settings.SettingInterface;
@@ -22,8 +23,10 @@ public class SplashPresenter extends MvpPresenter<BaseViewActivity> implements B
     private Disposable disposable;
     private SettingInterface settingInterface;
 
+
     public SplashPresenter() {
         this.settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
+
     }
 
     @Override

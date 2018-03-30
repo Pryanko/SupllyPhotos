@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.data.resource.ResourceManager;
+import ru.supplyphotos.data.storage.StorageManager;
 import ru.supplyphotos.di.modules.ContextModule;
 import ru.supplyphotos.di.modules.NavigationModule;
 import ru.supplyphotos.di.modules.RepositoryModule;
@@ -31,6 +32,8 @@ public interface AppComponent {
     ResourceManager getResourceManager();
 
     SettingsHelper getSettingsHelper();
+
+    StorageManager getStorageManager();
 
     Context getContext();
 }

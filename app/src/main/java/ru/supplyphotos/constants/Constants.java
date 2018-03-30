@@ -11,6 +11,12 @@ public class Constants {
 
 
 
+    //Storage
+    public final static Integer DEFAULT_COUNT_PRINT_IMAGE = 1;
+    public final static String PREFIX_PATH_IMAGE = "file://";
+
+
+
 
     //Settings helper
     public final static Integer DEFAULT_INT = 0;
@@ -32,6 +38,5 @@ public class Constants {
     public final static String MANUAL_SCREEN = "MANUAL_SCREEN";
     public final static String HEAD_SCREEN = "HEAD_SCREEN";
 
-    //Names Screens childFragments
-    public final static String GALLERY_PHONE_SCREEN = "GALLERY_PHONE_SCREEN";
+
 }

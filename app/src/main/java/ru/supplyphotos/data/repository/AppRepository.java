@@ -2,10 +2,14 @@ package ru.supplyphotos.data.repository;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import ru.supplyphotos.App;
 import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.answers.services.ItemService;
+import ru.supplyphotos.data.storage.ItemStorageImage;
+import ru.supplyphotos.data.storage.StorageManager;
 import ru.supplyphotos.rx.RxNetwork;
 
 /**
@@ -13,6 +17,17 @@ import ru.supplyphotos.rx.RxNetwork;
  */
 
 public class AppRepository implements BaseAppRepository {
+
+    private StorageManager storageManager;
+
+    public AppRepository() {
+        this.storageManager = App.getAppComponent().getStorageManager();
+    }
+
+    @Override
+    public Flowable<List<ItemStorageImage>> getListItemImageStorge() {
+        return storageManager.getListItemsStorageImage();
+    }
 
     @Override
     public Observable<Manual> getGuides() {
