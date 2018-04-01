@@ -1,11 +1,17 @@
 package ru.supplyphotos.data.storage;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * @author Libgo on 30.03.2018.
  */
-public class ItemStorageImage {
+public class ItemStorageImage extends RealmObject{
 
+    @PrimaryKey
     private Integer id_item;
+
+    private Integer service_id;
 
     private String path;
 

@@ -12,19 +12,19 @@ public class Guide {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    Integer id;
     @SerializedName("header")
     @Expose
-    private String header;
+    String header;
     @SerializedName("image1024")
     @Expose
-    private String image1024;
+    String image1024;
     @SerializedName("image480")
     @Expose
-    private String image480;
+    String image480;
     @SerializedName("text")
     @Expose
-    private String text;
+    String text;
 
     public Integer getId() {
         return id;

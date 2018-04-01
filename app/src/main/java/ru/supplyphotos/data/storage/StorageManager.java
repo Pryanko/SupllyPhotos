@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import ru.supplyphotos.App;
+import ru.supplyphotos.data.db.DataBaseSource;
 
 import static ru.supplyphotos.constants.Constants.DEFAULT_COUNT_PRINT_IMAGE;
 import static ru.supplyphotos.constants.Constants.PREFIX_PATH_IMAGE;
@@ -20,17 +22,19 @@ import static ru.supplyphotos.constants.Constants.PREFIX_PATH_IMAGE;
  */
 public class StorageManager implements AndroidStorageManger {
 
+    private DataBaseSource dataBaseSource;
     private ContentResolver contentResolver;
 
     public StorageManager(ContentResolver contentResolver) {
         this.contentResolver = contentResolver;
-       
+        this.dataBaseSource = App.getAppComponent().getDataBaseSource();
     }
 
 
     @Override
     public Flowable<List<ItemStorageImage>> getListItemsStorageImage() {
-        return Flowable.just(getListStorageImage());
+        return Flowable.just(getListStorageImage()).doAfterNext(itemStorageImages ->
+                dataBaseSource.createTableImageStorage(itemStorageImages));
     }
 
 

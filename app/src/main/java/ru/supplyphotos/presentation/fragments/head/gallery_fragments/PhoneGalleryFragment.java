@@ -64,7 +64,7 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
                 LinearLayoutManager.VERTICAL, false);
 
         gridLayoutManager.setItemPrefetchEnabled(true);
-        PhoneGalleryFragmentPermissionsDispatcher.runWithPermissionCheck(this);
+
 
 
 
@@ -127,7 +127,7 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
 
     @Override
     public void checkPermission() {
-
+        PhoneGalleryFragmentPermissionsDispatcher.runWithPermissionCheck(this);
        
     }
 

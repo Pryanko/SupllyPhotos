@@ -34,4 +34,6 @@ public class AppRepository implements BaseAppRepository {
     public Observable<List<ItemService>> getListService(Integer service_id){
         return RxNetwork.getListService(service_id);
     }
+
+
 }
