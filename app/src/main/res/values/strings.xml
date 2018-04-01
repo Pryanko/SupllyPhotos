@@ -19,4 +19,5 @@
     <string name="VK">Vk</string>
     <string name="INSTAGRAM">Instagram</string>
     <string name="wait">Раздел находится в разработке</string>
+    <string name="default_count_print">1</string>
 </resources>

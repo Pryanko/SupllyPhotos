@@ -24,7 +24,7 @@ public class StorageManager implements AndroidStorageManger {
 
     public StorageManager(ContentResolver contentResolver) {
         this.contentResolver = contentResolver;
-        List<ItemStorageImage> imageList = getListStorageImage();
+       
     }
 
 

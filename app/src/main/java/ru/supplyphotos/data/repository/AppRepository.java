@@ -18,16 +18,8 @@ import ru.supplyphotos.rx.RxNetwork;
 
 public class AppRepository implements BaseAppRepository {
 
-    private StorageManager storageManager;
 
-    public AppRepository() {
-        this.storageManager = App.getAppComponent().getStorageManager();
-    }
 
-    @Override
-    public Flowable<List<ItemStorageImage>> getListItemImageStorge() {
-        return storageManager.getListItemsStorageImage();
-    }
 
     @Override
     public Observable<Manual> getGuides() {

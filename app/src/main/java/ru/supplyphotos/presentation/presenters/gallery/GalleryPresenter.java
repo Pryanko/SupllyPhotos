@@ -8,6 +8,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.repository.AppRepository;
+import ru.supplyphotos.data.storage.StorageManager;
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.ContractsGalleryFragmentView;
 import ru.supplyphotos.presentation.presenters.BasePresenter;
 
@@ -19,23 +20,25 @@ public class GalleryPresenter extends MvpPresenter<ContractsGalleryFragmentView.
                         implements BasePresenter.Gallery{
     private CompositeDisposable compositeDisposable;
     private AppRepository appRepository;
+    private StorageManager storageManager;
 
     public GalleryPresenter() {
         appRepository = App.getAppComponent().getAppRepository();
         compositeDisposable = new CompositeDisposable();
+        storageManager = App.getAppComponent().getStorageManager();
     }
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().checkPermission();
+      //  getViewState().checkPermission();
     }
 
     //Implemetns
     @Override
     public void loadImage() {
         getViewState().showLoading(true);
-        compositeDisposable.add(appRepository.getListItemImageStorge()
+        compositeDisposable.add(storageManager.getListItemsStorageImage()
                 .subscribeOn(Schedulers.io())
                 .doOnNext(itemStorageImages -> getViewState().updateAdapterList(itemStorageImages))
                 .observeOn(AndroidSchedulers.mainThread())

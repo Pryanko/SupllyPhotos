@@ -9,7 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +23,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.Provides;
+
 import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
@@ -32,6 +33,8 @@ import permissions.dispatcher.RuntimePermissions;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.storage.ItemStorageImage;
 import ru.supplyphotos.presentation.adapters.GalleryAdapter;
+import ru.supplyphotos.presentation.adapters.decoration.GridSpaceDecoration;
+import ru.supplyphotos.presentation.adapters.decoration.SpaceDecoration;
 import ru.supplyphotos.presentation.presenters.gallery.GalleryPresenter;
 
 /**
@@ -44,7 +47,7 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
     @BindView(R.id.progressBar_gallery_phone)
     ProgressBar progressBar;
     @BindView(R.id.gallery_recycler)
-    RecyclerView gaelleryRecycler;
+    RecyclerView galleryRecycler;
 
     @InjectPresenter
     GalleryPresenter galleryPresenter;
@@ -55,51 +58,62 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         galleryAdapter = new GalleryAdapter(getActivity());
         gridLayoutManager = new GridLayoutManager(getActivity(), 3,
                 LinearLayoutManager.VERTICAL, false);
+
         gridLayoutManager.setItemPrefetchEnabled(true);
-        
+        PhoneGalleryFragmentPermissionsDispatcher.runWithPermissionCheck(this);
 
 
 
     }
 
 
-
-    @SuppressLint("NeedOnRequestPermissionsResult")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PhoneGalleryFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gallery_phone, container, false);
         ButterKnife.bind(this, view);
+        galleryRecycler.addItemDecoration(new GridSpaceDecoration(3,5, true));
+
         return view;
     }
 
 
-    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showStorage(){
+    @SuppressLint("NeedOnRequestPermissionsResult")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PhoneGalleryFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode,grantResults);
+    }
+
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void run(){
         galleryPresenter.loadImage();
     }
 
-    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showRationaleForCamera(final PermissionRequest request) {
-        new AlertDialog.Builder(getParentFragment().getActivity())
-                .setMessage("OK OK")
+
+    @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void runRationaleForStorage(final PermissionRequest request){
+        new AlertDialog.Builder(getActivity())
+                .setMessage("OK")
                 .setPositiveButton("DA", (dialog, button) -> request.proceed())
                 .setNegativeButton("NET", (dialog, button) -> request.cancel())
                 .show();
     }
 
-    @OnPermissionDenied(Manifest.permission.CAMERA)
-    void showDeniedForCamera() {
-        Toast.makeText(getParentFragment().getActivity(), "НЕТ", Toast.LENGTH_SHORT).show();
+    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void runDeniedForStorage(){
+        Toast.makeText(getActivity(),"LOLOLOLOLOLOLOLOLOLOLO", Toast.LENGTH_SHORT).show();
+    }
+
+    
+    @OnNeverAskAgain(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void runNeverAskForStorage(){
+        Toast.makeText(getActivity(),"LOLOLOLOLOLOLOLOLOLOLO", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -114,14 +128,14 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
     @Override
     public void checkPermission() {
 
-        PhoneGalleryFragmentPermissionsDispatcher.showStorageWithPermissionCheck(this);
+       
     }
 
 
     @Override
     public void showGallery() {
-        gaelleryRecycler.setLayoutManager(gridLayoutManager);
-        gaelleryRecycler.setAdapter(galleryAdapter);
+        galleryRecycler.setLayoutManager(gridLayoutManager);
+        galleryRecycler.setAdapter(galleryAdapter);
         galleryAdapter.notifyDataSetChanged();
     }
 

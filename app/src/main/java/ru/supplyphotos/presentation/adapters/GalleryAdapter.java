@@ -1,13 +1,17 @@
 package ru.supplyphotos.presentation.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -51,29 +55,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull GalleryAdapter.ViewHolder holder, int position) {
 
-        Glide.with(context)
-                .load(itemStorageImages.get(position).getPath())
-                .override(160,160)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .skipMemoryCache(true)
-                .into(holder.itemGalleryImage);
-
-        holder.itemGalleryImage.setOnClickListener(v ->
-            holder.viewCount.setVisibility(View.VISIBLE)
-        );
+           holder.bind(itemStorageImages.get(position));
 
     }
 
-   /*
+
     public int getItemViewType(int position) {
         return position;
-    }      */
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,10 +75,46 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         ImageView itemGalleryImage;
         @BindView(R.id.countView)
         RelativeLayout viewCount;
+        @BindView(R.id.count_text)
+        TextView textCount;
+        @BindView(R.id.add_count_print)
+        TextView countAdd;
+        @BindView(R.id.delete_count_print)
+        TextView countDelete;
+      //  @BindView(R.id.check_selected_image)
+      //  CheckBox checkBox;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+        }
+
+        void bind(ItemStorageImage itemStorageImage){
+
+            countAdd.setOnClickListener(v -> {
+                String s = String.valueOf(textCount.getText());
+                        textCount.setText(String.valueOf(Integer.parseInt(s) + 1));
+
+                    }
+             );
+
+            Glide.with(context)
+                    .load(itemStorageImage.getPath())
+                    .override(160,160)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    //.skipMemoryCache(true)
+                    .into(itemGalleryImage);
+
+            itemGalleryImage.setOnClickListener(v -> {
+               // checkBox.setHighlightColor(Color.parseColor("#ffbe75"));
+                viewCount.setVisibility(View.VISIBLE);
+                textCount.setText(String.valueOf(1));
+               // checkBox.setChecked(true);
+            });
+
+
         }
     }
 }

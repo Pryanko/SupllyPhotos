@@ -15,7 +15,6 @@ import ru.supplyphotos.data.storage.ItemStorageImage;
 
 public interface BaseAppRepository {
 
-    Flowable<List<ItemStorageImage>> getListItemImageStorge();
 
     Observable<Manual> getGuides();
 
