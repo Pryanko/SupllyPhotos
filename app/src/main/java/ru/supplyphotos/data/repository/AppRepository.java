@@ -10,6 +10,7 @@ import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.answers.services.ItemService;
 import ru.supplyphotos.data.db.DataBaseSource;
+import ru.supplyphotos.data.db.RealmDataBase;
 import ru.supplyphotos.data.storage.ItemStorageImage;
 import ru.supplyphotos.data.storage.StorageManager;
 import ru.supplyphotos.rx.RxNetwork;
@@ -54,6 +55,10 @@ public class AppRepository implements BaseAppRepository {
         }
 
 
+    }
+
+    public RealmDataBase.UpdateTable getTouchManager(){
+        return dataBaseSource.getTouchManager();
     }
 
 

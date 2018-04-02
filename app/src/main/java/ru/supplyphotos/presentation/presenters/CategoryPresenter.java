@@ -49,8 +49,11 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
         getViewState().delegateTouchItemAdapter(this);
     }
 
-
-
+    @Override
+    public void destroyView(ContractsFragmentView.CategoryView view) {
+        super.destroyView(view);
+        compositeDisposable.clear();
+    }
 
     private void handleError(Throwable throwable) {
     }

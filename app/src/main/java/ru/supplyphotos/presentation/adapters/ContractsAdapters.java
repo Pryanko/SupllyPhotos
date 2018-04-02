@@ -9,6 +9,15 @@ import ru.supplyphotos.data.answers.category.ItemCategory;
 public interface ContractsAdapters {
 
 
+    interface GalleryTouchManager{
+
+        void updateCountPrintImage(Integer item_id, Integer count);
+
+        void switchSelectedItemImage(Integer item_id, Boolean isSelectedItem);
+
+    }
+
+
     interface ItemCategoryTouch {
 
         void touchItemCategory(ItemCategory itemCategory);

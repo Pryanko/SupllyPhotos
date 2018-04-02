@@ -26,6 +26,7 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     private SettingInterface settingInterface;
     private AppRepository appRepository;
     private Router router;
+    private Disposable disposable;
 
     public ServicePresenter() {
         this.settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
@@ -41,7 +42,7 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     }
 
     private void getTestInfo(){
-        Disposable disposable = appRepository.getListService(settingInterface.getSelectedItemCategory().getId())
+        disposable = appRepository.getListService(settingInterface.getSelectedItemCategory().getId())
                 .subscribe(itemServices -> getViewState().testStart(settingInterface
                         .getSelectedItemCategory(), itemServices), throwable -> onError());
     }
@@ -51,6 +52,12 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getTestInfo();
+    }
+
+    @Override
+    public void destroyView(ContractsFragmentView.ServiceView view) {
+        super.destroyView(view);
+        disposable.dispose();
     }
 
     @Override

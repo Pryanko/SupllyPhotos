@@ -33,6 +33,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.storage.ItemStorageImage;
+import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.adapters.GalleryAdapter;
 import ru.supplyphotos.presentation.adapters.decoration.GridSpaceDecoration;
 import ru.supplyphotos.presentation.adapters.decoration.SpaceDecoration;
@@ -126,6 +127,11 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
     public void checkPermission() {
         PhoneGalleryFragmentPermissionsDispatcher.runWithPermissionCheck(this);
        
+    }
+
+    @Override
+    public void setTouchManager(ContractsAdapters.GalleryTouchManager galleryTouchManager){
+        galleryAdapter.setGalleryTouchManager(galleryTouchManager);
     }
 
 

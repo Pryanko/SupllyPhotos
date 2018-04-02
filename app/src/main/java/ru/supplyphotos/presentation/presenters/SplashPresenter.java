@@ -36,6 +36,12 @@ public class SplashPresenter extends MvpPresenter<BaseViewActivity> implements B
 
     }
 
+    @Override
+    public void destroyView(BaseViewActivity view) {
+        super.destroyView(view);
+       // disposable.dispose();
+    }
+
     private void startingApp(){
         
         if(settingInterface.getBooleanRun()){

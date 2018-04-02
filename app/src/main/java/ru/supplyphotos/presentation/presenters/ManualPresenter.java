@@ -34,6 +34,7 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
     private AppRepository appRepository;
     private ResourceManager resourceManager;
     private Router router;
+    private Disposable disposable;
 
     public ManualPresenter() {
         this.router = App.getAppComponent().getRouter();
@@ -50,6 +51,11 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
 
     }
 
+    @Override
+    public void destroyView(ContractsFragmentView.ManualView view) {
+        super.destroyView(view);
+        disposable.dispose();
+    }
 
     public void nextScreen(){
         router.newRootScreen(CATEGORY_SCREEN);
@@ -58,7 +64,7 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
 
     private void showView() {
 
-        Disposable disposable = appRepository.getGuides()
+        disposable = appRepository.getGuides()
                 .subscribe(this::startViewShow, this::handleError);
     }
 

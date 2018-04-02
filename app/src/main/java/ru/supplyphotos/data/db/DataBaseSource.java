@@ -2,6 +2,7 @@ package ru.supplyphotos.data.db;
 
 import android.util.Log;
 import java.util.List;
+import java.util.Objects;
 
 
 import io.reactivex.Flowable;
@@ -13,12 +14,16 @@ import ru.supplyphotos.data.storage.ItemStorageImage;
 /**
  * @author libgo (01.04.2018)
  */
-public class DataBaseSource implements RealmDataBase{
+public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBase.UpdateTable{
 
     private RealmConfiguration configuration = new RealmConfiguration.Builder()
             .name("table_item_image.realm")
             .schemaVersion(0)
             .build();
+
+    public RealmDataBase.UpdateTable getTouchManager(){
+        return this;
+    }
 
 
     @Override
@@ -35,7 +40,6 @@ public class DataBaseSource implements RealmDataBase{
     public Flowable<List<ItemStorageImage>> getItemDBImage() {
         Realm realm = Realm.getInstance(configuration);
         RealmQuery<ItemStorageImage> query = realm.where(ItemStorageImage.class);
-        Log.d("СРАБОТАЛА БАЗА", "OK");
         return Flowable.just(realm.copyFromRealm(query.findAllAsync()));
 
 
@@ -48,4 +52,27 @@ public class DataBaseSource implements RealmDataBase{
     }
 
 
+    @Override
+    public void updateCountPrintImage(Integer item_id, Integer count) {
+        Realm realm = Realm.getInstance(configuration);
+        realm.beginTransaction();
+        ItemStorageImage itemStorageImage = realm.where(ItemStorageImage.class)
+                .equalTo("id_item", item_id).findFirst();
+        Objects.requireNonNull(itemStorageImage).setCountPrint(count);
+        realm.commitTransaction();
+        realm.close();
+
+
+    }
+
+    @Override
+    public void switchSelectedItemImage(Integer item_id, Boolean isSelectedItem) {
+        Realm realm = Realm.getInstance(configuration);
+        realm.beginTransaction();
+        ItemStorageImage itemStorageImage = realm.where(ItemStorageImage.class)
+                .equalTo("id_item", item_id).findFirst();
+        Objects.requireNonNull(itemStorageImage).setSelected(isSelectedItem);
+        realm.commitTransaction();
+        realm.close();
+    }
 }

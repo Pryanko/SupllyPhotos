@@ -7,6 +7,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import java.util.List;
 
 import ru.supplyphotos.data.storage.ItemStorageImage;
+import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 
 /**
@@ -21,6 +22,8 @@ public interface ContractsGalleryFragmentView {
         
         @StateStrategyType(SkipStrategy.class)
         void checkPermission();
+
+        void setTouchManager(ContractsAdapters.GalleryTouchManager galleryTouchManager);
 
         void showGallery();
 

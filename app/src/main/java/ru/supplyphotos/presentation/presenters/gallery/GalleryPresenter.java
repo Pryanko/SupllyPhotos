@@ -12,7 +12,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.db.DataBaseSource;
+import ru.supplyphotos.data.db.RealmDataBase;
 import ru.supplyphotos.data.repository.AppRepository;
+import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.ContractsGalleryFragmentView;
 import ru.supplyphotos.presentation.presenters.BasePresenter;
 
@@ -22,10 +24,10 @@ import ru.supplyphotos.presentation.presenters.BasePresenter;
  */
 @InjectViewState
 public class GalleryPresenter extends MvpPresenter<ContractsGalleryFragmentView.PhoneGalleryView>
-                        implements BasePresenter.Gallery{
+                        implements BasePresenter.Gallery, ContractsAdapters.GalleryTouchManager{
     private CompositeDisposable compositeDisposable;
     private AppRepository appRepository;
-
+    private RealmDataBase.UpdateTable touchManager;
 
     public GalleryPresenter() {
         appRepository = App.getAppComponent().getAppRepository();
@@ -40,6 +42,18 @@ public class GalleryPresenter extends MvpPresenter<ContractsGalleryFragmentView.
         Log.d("onFirstViewAttach", "GalleryPresenter");
     }
 
+    @Override
+    public void attachView(ContractsGalleryFragmentView.PhoneGalleryView view) {
+        super.attachView(view);
+        getViewState().setTouchManager(this);
+        this.touchManager = appRepository.getTouchManager();
+    }
+
+    @Override
+    public void destroyView(ContractsGalleryFragmentView.PhoneGalleryView view) {
+        super.destroyView(view);
+        compositeDisposable.clear();
+    }
 
     //Implemetns
     @Override
@@ -63,5 +77,18 @@ public class GalleryPresenter extends MvpPresenter<ContractsGalleryFragmentView.
     @Override
     public void destroyView() {
 
+    }
+
+
+
+
+    @Override
+    public void updateCountPrintImage(Integer item_id, Integer count) {
+           touchManager.updateCountPrintImage(item_id, count);
+    }
+
+    @Override
+    public void switchSelectedItemImage(Integer item_id, Boolean isSelectedItem) {
+            touchManager.switchSelectedItemImage(item_id, isSelectedItem);
     }
 }

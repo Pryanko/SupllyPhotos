@@ -8,6 +8,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class ItemStorageImage extends RealmObject{
 
+
     @PrimaryKey
     private Integer id_item;
 

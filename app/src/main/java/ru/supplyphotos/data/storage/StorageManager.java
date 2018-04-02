@@ -14,6 +14,7 @@ import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.db.DataBaseSource;
+import ru.supplyphotos.tools.settings.SettingInterface;
 
 import static ru.supplyphotos.constants.Constants.DEFAULT_COUNT_PRINT_IMAGE;
 import static ru.supplyphotos.constants.Constants.PREFIX_PATH_IMAGE;
@@ -25,6 +26,7 @@ public class StorageManager implements AndroidStorageManger {
 
     private DataBaseSource dataBaseSource;
     private ContentResolver contentResolver;
+    //private SettingInterface settingInterface; //для получения сервис id
 
     public StorageManager(ContentResolver contentResolver) {
         this.contentResolver = contentResolver;

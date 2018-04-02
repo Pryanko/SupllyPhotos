@@ -10,10 +10,21 @@ import ru.supplyphotos.data.storage.ItemStorageImage;
  */
 public interface RealmDataBase {
 
+    interface CreateGetTable {
 
-    void createTableImageStorage(List<ItemStorageImage> itemStorageImageList);
+        void createTableImageStorage(List<ItemStorageImage> itemStorageImageList);
 
-    Flowable<List<ItemStorageImage>> getItemDBImage();
+        Flowable<List<ItemStorageImage>> getItemDBImage();
 
-    boolean getFillImagesTable();
+        boolean getFillImagesTable();
+    }
+
+
+    interface UpdateTable {
+
+        void updateCountPrintImage(Integer item_id, Integer count);
+
+        void switchSelectedItemImage(Integer item_id, Boolean isSelectedItem);
+
+    }
 }

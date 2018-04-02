@@ -21,6 +21,15 @@
         android:layout_width="115dp"
         android:layout_height="115dp" />
 
+        <ru.supplyphotos.design.GalleryCheckBox
+            android:id="@+id/gallery_check_box"
+            android:layout_alignBottom="@+id/image_gallery_item"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
 
         <RelativeLayout
             android:id="@+id/countView"
