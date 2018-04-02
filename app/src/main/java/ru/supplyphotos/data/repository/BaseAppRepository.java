@@ -22,5 +22,5 @@ public interface BaseAppRepository {
 
     Observable<List<ItemService>> getListService(Integer service_id);
 
-
+    Flowable<List<ItemStorageImage>> getImageFlowable();
 }

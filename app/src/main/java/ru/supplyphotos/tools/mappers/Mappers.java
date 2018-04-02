@@ -9,6 +9,7 @@ import ru.supplyphotos.data.answers.services.ItemService;
 import ru.supplyphotos.data.answers.services.Services;
 import ru.supplyphotos.data.answers.start_login.DeviceToken;
 import ru.supplyphotos.data.answers.start_login.StartToken;
+import ru.supplyphotos.data.storage.ItemStorageImage;
 
 /**
  * @author libgo on 14.01.2018.
@@ -26,6 +27,10 @@ public class Mappers {
 
     public static List<ItemService> mapListCategory(Services itemService){
         return itemService.getData();
+    }
+
+    public static boolean filterNotNull(List<ItemStorageImage> list){
+        return list.size() != 0;
     }
 
 }

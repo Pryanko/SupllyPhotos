@@ -20,6 +20,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,18 +54,13 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
     GalleryPresenter galleryPresenter;
 
     private GalleryAdapter galleryAdapter;
-    private GridLayoutManager gridLayoutManager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         galleryAdapter = new GalleryAdapter(getActivity());
-        gridLayoutManager = new GridLayoutManager(getActivity(), 3,
-                LinearLayoutManager.VERTICAL, false);
-
-        gridLayoutManager.setItemPrefetchEnabled(true);
-
 
 
 
@@ -78,7 +74,8 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
         View view = inflater.inflate(R.layout.fragment_gallery_phone, container, false);
         ButterKnife.bind(this, view);
         galleryRecycler.addItemDecoration(new GridSpaceDecoration(3,5, true));
-
+        galleryRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3,
+                LinearLayoutManager.VERTICAL, false));
         return view;
     }
 
@@ -98,7 +95,7 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
 
     @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
     void runRationaleForStorage(final PermissionRequest request){
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
                 .setMessage("OK")
                 .setPositiveButton("DA", (dialog, button) -> request.proceed())
                 .setNegativeButton("NET", (dialog, button) -> request.cancel())
@@ -134,7 +131,6 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
 
     @Override
     public void showGallery() {
-        galleryRecycler.setLayoutManager(gridLayoutManager);
         galleryRecycler.setAdapter(galleryAdapter);
         galleryAdapter.notifyDataSetChanged();
     }

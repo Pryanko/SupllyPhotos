@@ -1,5 +1,6 @@
 package ru.supplyphotos.presentation.fragments.head.gallery_fragments;
 
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
@@ -13,9 +14,9 @@ import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
  */
 public interface ContractsGalleryFragmentView {
 
-
+    @StateStrategyType(AddToEndSingleStrategy.class)
     interface PhoneGalleryView extends ContractsFragmentView.BaseViewFragment{
-
+        //@StateStrategyType(SkipStrategy.class)
         void updateAdapterList(List<ItemStorageImage> itemStorageImages);
         
         @StateStrategyType(SkipStrategy.class)

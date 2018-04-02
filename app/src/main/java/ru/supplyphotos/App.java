@@ -25,11 +25,6 @@ public class App extends Application{
                 .build();
 
         Realm.init(this);
-        RealmConfiguration configuration = new RealmConfiguration.Builder()
-                .name("table_item_image.realm")
-                .schemaVersion(0)
-                .build();
-        Realm.setDefaultConfiguration(configuration);
 
         Fresco.initialize(this);
 

@@ -2,7 +2,6 @@ package ru.supplyphotos.data.storage;
 
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -10,7 +9,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.db.DataBaseSource;
 
@@ -33,8 +34,11 @@ public class StorageManager implements AndroidStorageManger {
 
     @Override
     public Flowable<List<ItemStorageImage>> getListItemsStorageImage() {
-        return Flowable.just(getListStorageImage()).doAfterNext(itemStorageImages ->
+        Log.d("СРАБОТАЛА ПАМЯТЬ", "OK");
+        return Flowable.just(getListStorageImage())
+                .doAfterNext(itemStorageImages ->
                 dataBaseSource.createTableImageStorage(itemStorageImages));
+
     }
 
 
