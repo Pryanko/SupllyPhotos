@@ -25,4 +25,16 @@ public class RxViews {
     }
 
 
+    public static Observable<Integer> clicksControlImagePrint(TextView positiveCount,
+                                                              TextView negativeCount,
+                                                              TextView textCount,
+                                                              GalleryCheckBox galleryCheckBox) {
+
+        return Observable.unsafeCreate(new ControlCountPrintImage(positiveCount, negativeCount,
+                textCount, galleryCheckBox))
+                .observeOn(AndroidSchedulers.mainThread());
+
+    }
+
+
 }

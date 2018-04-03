@@ -18,6 +18,8 @@ public interface SettingInterface {
 
     void saveSelectedItemCategory(ItemCategory itemCategory);
 
+    String getDeviceToken();
+
     SelectedItemCategory getSelectedItemCategory();
 
     SettingInterface getSettingsInterface();
@@ -25,4 +27,5 @@ public interface SettingInterface {
     void saveSelectedServiceId(Integer service_id);
 
 
+    Integer getSelectedServiceId();
 }

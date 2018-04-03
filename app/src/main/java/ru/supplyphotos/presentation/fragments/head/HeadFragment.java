@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.supplyphotos.App;
 import ru.supplyphotos.R;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 
@@ -21,7 +22,9 @@ import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.InstagramGalleryFragment;
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.PhoneGalleryFragment;
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.VkGalleryFragment;
+import ru.terrakok.cicerone.Router;
 
+import static ru.supplyphotos.constants.Constants.UPLOAD_SCREEN;
 
 
 /**
@@ -35,6 +38,9 @@ public class HeadFragment extends MvpAppCompatFragment
     Button nextButton;
     @BindView(R.id.bottom_view_bar)
     BottomNavigationView bottomBar;
+
+    private Router router = App.getAppComponent().getRouter();
+    // ДОБАВИТЬ ПРЕЗЕНТЕР В ХЭД ФРАГМЕНТ
 
 
 
@@ -57,6 +63,12 @@ public class HeadFragment extends MvpAppCompatFragment
     }
 
     private void initListener() {
+
+        nextButton.setOnClickListener(v -> {
+             router.navigateTo(UPLOAD_SCREEN);
+        });
+
+
 
        bottomBar.setOnNavigationItemSelectedListener((MenuItem item) -> {
             

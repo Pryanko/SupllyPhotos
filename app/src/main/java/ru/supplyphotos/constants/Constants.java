@@ -37,6 +37,7 @@ public class Constants {
     public final static String SERVICES_SCREEN = "SERVICES_SCREEN";
     public final static String MANUAL_SCREEN = "MANUAL_SCREEN";
     public final static String HEAD_SCREEN = "HEAD_SCREEN";
+    public final static String UPLOAD_SCREEN = "UPLOAD_SCREEN";
 
 
 }

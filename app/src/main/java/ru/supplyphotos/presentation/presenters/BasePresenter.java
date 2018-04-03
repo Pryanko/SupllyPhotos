@@ -8,6 +8,12 @@ import com.arellomobile.mvp.MvpPresenter;
 
 public interface BasePresenter  {
 
+
+
+    interface Upload extends Contracts{
+
+    }
+
     interface Gallery extends Contracts{
 
         void loadImage();

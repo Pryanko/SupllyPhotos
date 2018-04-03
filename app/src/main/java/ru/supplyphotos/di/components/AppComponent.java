@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.supplyphotos.data.db.DataBaseSource;
 import ru.supplyphotos.data.repository.AppRepository;
+import ru.supplyphotos.data.repository.UploadRepository;
 import ru.supplyphotos.data.resource.ResourceManager;
 import ru.supplyphotos.data.storage.StorageManager;
 import ru.supplyphotos.di.modules.ContextModule;
@@ -24,11 +25,14 @@ import ru.terrakok.cicerone.Router;
 @Singleton
 @Component(modules = {NavigationModule.class, SettingModule.class, ContextModule.class,
         RepositoryModule.class, DataBaseModule.class})
+
 public interface AppComponent {
 
     DataBaseSource getDataBaseSource();
 
     AppRepository getAppRepository();
+
+    UploadRepository getUploadRepository();
 
     Router getRouter();
 

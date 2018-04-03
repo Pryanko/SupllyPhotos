@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.answers.services.ItemService;
@@ -15,12 +16,23 @@ import ru.supplyphotos.data.storage.ItemStorageImage;
 
 public interface BaseAppRepository {
 
+    interface GetRepository {
 
-    Observable<Manual> getGuides();
+        Observable<Manual> getGuides();
 
-    Observable<List<ItemCategory>> getListCategory();
+        Observable<List<ItemCategory>> getListCategory();
 
-    Observable<List<ItemService>> getListService(Integer service_id);
+        Observable<List<ItemService>> getListService(Integer service_id);
 
-    Flowable<List<ItemStorageImage>> getImageFlowable();
+        Flowable<List<ItemStorageImage>> getImageFlowable();
+
+    }
+
+    interface UploadRepository {
+
+
+        Flowable<ResponseBody> startingUploadImage();
+    }
+
+
 }

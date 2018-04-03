@@ -19,7 +19,7 @@ import ru.supplyphotos.rx.RxNetwork;
  * @author Libgo on 15.03.2018.
  */
 
-public class AppRepository implements BaseAppRepository {
+public class AppRepository implements BaseAppRepository.GetRepository {
 
     private StorageManager storageManager;
     private DataBaseSource dataBaseSource;

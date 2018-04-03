@@ -35,15 +35,13 @@ public class SelectedImageItem implements ObservableSource<Boolean>{
              @Override
              public void onClick(View v) {
                  if(galleryCheckBox.isChecked()){
-                     galleryCheckBox.setChecked(false);
+                     //galleryCheckBox.setChecked(false);
                  }else {
                      galleryCheckBox.setChecked(true, true);
                  }
 
              }
          };
-
-
 
 
         GalleryCheckBox.OnCheckedChangeListener onCheckedChangeListener = new GalleryCheckBox.OnCheckedChangeListener() {

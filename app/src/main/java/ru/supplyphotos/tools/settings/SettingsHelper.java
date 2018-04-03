@@ -66,6 +66,11 @@ public class SettingsHelper implements SettingInterface {
     }
 
     @Override
+    public String getDeviceToken(){
+        return sharedPreferences.getString(DEVICE_TOKEN, DEFAULT_STRING);
+    }
+
+    @Override
     public SelectedItemCategory getSelectedItemCategory() {
         return ItemCategory();
     }
@@ -80,6 +85,11 @@ public class SettingsHelper implements SettingInterface {
         SharedPreferences.Editor settingEditor = sharedPreferences.edit();
         settingEditor.putInt(ITEM_SERVICE_ID, service_id);
         settingEditor.apply();
+    }
+
+    @Override
+    public Integer getSelectedServiceId(){
+        return sharedPreferences.getInt(ITEM_SERVICE_ID, 0);
     }
 
 }

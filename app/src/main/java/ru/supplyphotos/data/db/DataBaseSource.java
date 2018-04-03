@@ -9,6 +9,7 @@ import io.reactivex.Flowable;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import ru.supplyphotos.data.storage.ItemStorageImage;
 
 /**
@@ -74,5 +75,11 @@ public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBa
         Objects.requireNonNull(itemStorageImage).setSelected(isSelectedItem);
         realm.commitTransaction();
         realm.close();
+    }
+
+    public RealmResults<ItemStorageImage> getSelectedList(){
+        Realm realm = Realm.getInstance(configuration);
+        return realm.where(ItemStorageImage.class).equalTo("isSelected", true).findAll();
+
     }
 }

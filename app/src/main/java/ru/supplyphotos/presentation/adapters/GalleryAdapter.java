@@ -87,9 +87,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         @BindView(R.id.count_text)
         TextView textCount;
         @BindView(R.id.add_count_print)
-        TextView countAdd;
+        TextView positiveCount;
         @BindView(R.id.delete_count_print)
-        TextView countDelete;
+        TextView negativeCount;
         @BindView(R.id.gallery_check_box)
         GalleryCheckBox checkBoxGallery;
       //  @BindView(R.id.check_selected_image)
@@ -104,24 +104,40 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
 
         void bind(ItemStorageImage itemStorageImage){
+            textCount.setText(String.valueOf(itemStorageImage.getCountPrint()));
+            if(itemStorageImage.getSelected()){
+                viewCount.setVisibility(View.VISIBLE);
+                checkBoxGallery.setChecked(true);
+            }
 
-        /* Disposable disposable = RxViews.clicksSelectedImageItem(checkBoxGallery, itemGalleryImage, viewCount)
+
+            Disposable disposable = RxViews.clicksSelectedImageItem(checkBoxGallery,
+                    itemGalleryImage, viewCount)
                     .subscribe(aBoolean -> {
                         Log.d("Click Booooo", String.valueOf(aBoolean));
                         galleryTouchManager
                                 .switchSelectedItemImage(itemStorageImage.getId_item(), aBoolean);
                         itemStorageImage.setSelected(aBoolean);
-                    });    */
+                    });
+
+
+
+            Disposable disposable1 = RxViews.clicksControlImagePrint(positiveCount, negativeCount,
+                    textCount, checkBoxGallery)
+                    .subscribe(integer -> {
+                        Log.d("Click Booooo", String.valueOf(integer));
+                        galleryTouchManager.updateCountPrintImage(itemStorageImage.getId_item(),
+                                integer);
+                    });
          
-            if(itemStorageImage.getSelected()){
+          /*  if(itemStorageImage.getSelected()){
                 viewCount.setVisibility(View.VISIBLE);
                 textCount.setText(String.valueOf(itemStorageImage.getCountPrint()));
                 checkBoxGallery.setChecked(true);
-            }
+            }  */
 
-            countAdd.setOnClickListener(v -> {
-                String s = String.valueOf(textCount.getText());
-                        textCount.setText(String.valueOf(Integer.parseInt(s) + 1));
+          /*  positiveCount.setOnClickListener(v -> {
+
                         galleryTouchManager.updateCountPrintImage(itemStorageImage.getId_item(),
                                 Integer.parseInt(String.valueOf(textCount.getText())));
 
@@ -129,7 +145,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                     }
              );
 
-            countDelete.setOnClickListener(v -> {
+            negativeCount.setOnClickListener(v -> {
                 String s = String.valueOf(textCount.getText());
                 textCount.setText(String.valueOf(Integer.parseInt(s) - 1));
                 galleryTouchManager.updateCountPrintImage(itemStorageImage.getId_item(),
@@ -138,7 +154,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
              }
 
-            );
+            );  */
 
             Glide.with(context)
                     .load(itemStorageImage.getPath())
@@ -148,7 +164,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                     //.skipMemoryCache(true)
                     .into(itemGalleryImage);
 
-            itemGalleryImage.setOnClickListener(v -> {
+          /*  itemGalleryImage.setOnClickListener(v -> {
                 checkBoxGallery.setChecked(true, true);
                // checkBox.setHighlightColor(Color.parseColor("#ffbe75"));
                 galleryTouchManager.switchSelectedItemImage(itemStorageImage.getId_item(),
@@ -156,7 +172,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 viewCount.setVisibility(View.VISIBLE);
                 textCount.setText(String.valueOf(1));
                // checkBox.setChecked(true);
-            });  
+            });   */
 
 
         }

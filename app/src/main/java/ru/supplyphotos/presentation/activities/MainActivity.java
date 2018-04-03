@@ -18,6 +18,7 @@ import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
 import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
 import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
+import ru.supplyphotos.presentation.fragments.upload.UploadFragment;
 import ru.supplyphotos.presentation.presenters.MainPresenter;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.android.SupportFragmentNavigator;
@@ -26,6 +27,7 @@ import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
 import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
 import static ru.supplyphotos.constants.Constants.MANUAL_SCREEN;
 import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
+import static ru.supplyphotos.constants.Constants.UPLOAD_SCREEN;
 
 
 /**
@@ -57,6 +59,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                 case HEAD_SCREEN:
                     Toast.makeText(getApplication(), "Ололо", Toast.LENGTH_LONG).show();
                     return new HeadFragment();
+                case UPLOAD_SCREEN:
+                    return new UploadFragment();
                 default:
                     throw new RuntimeException("“Unknown screen key!”");
             }
