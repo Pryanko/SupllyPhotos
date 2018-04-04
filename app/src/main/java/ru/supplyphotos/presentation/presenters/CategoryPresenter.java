@@ -61,7 +61,7 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
 
 
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
 
     }
 

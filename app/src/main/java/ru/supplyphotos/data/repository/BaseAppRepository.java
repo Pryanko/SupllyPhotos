@@ -9,6 +9,7 @@ import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.answers.services.ItemService;
 import ru.supplyphotos.data.storage.ItemStorageImage;
+import ru.supplyphotos.data.upload.order_item_id.OrderItemId;
 
 /**
  * @author Libgo on 15.03.2018.
@@ -30,6 +31,8 @@ public interface BaseAppRepository {
 
     interface UploadRepository {
 
+
+        Flowable<OrderItemId> createOrderItem();
 
         Flowable<ResponseBody> startingUploadImage();
     }

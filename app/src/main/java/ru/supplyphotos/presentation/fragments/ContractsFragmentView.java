@@ -20,6 +20,14 @@ import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 public interface ContractsFragmentView {
 
 
+
+    interface DescriptionView extends BaseViewFragment{
+
+
+
+    }
+
+
     interface UploadView extends BaseViewFragment{
 
         void setUploadMaxProgress(Integer endUpload);

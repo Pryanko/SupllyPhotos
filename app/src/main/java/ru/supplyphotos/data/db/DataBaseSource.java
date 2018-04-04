@@ -82,4 +82,8 @@ public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBa
         return realm.where(ItemStorageImage.class).equalTo("isSelected", true).findAll();
 
     }
+
+    public Integer getSizeListSelectedItems(){
+        return getSelectedList().size();
+    }
 }

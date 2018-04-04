@@ -96,11 +96,11 @@ public class PhoneGalleryFragment extends MvpAppCompatFragment
 
     @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
     void runRationaleForStorage(final PermissionRequest request){
-        new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
+        /*new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
                 .setMessage("OK")
                 .setPositiveButton("DA", (dialog, button) -> request.proceed())
                 .setNegativeButton("NET", (dialog, button) -> request.cancel())
-                .show();
+                .show();  */
     }
 
     @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)

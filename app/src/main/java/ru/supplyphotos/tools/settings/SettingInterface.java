@@ -27,5 +27,9 @@ public interface SettingInterface {
     void saveSelectedServiceId(Integer service_id);
 
 
+    Integer getOrderItemId();
+
+    void openOrderId(Boolean isOpenOrderItemId, Integer ordreItemId);
+
     Integer getSelectedServiceId();
 }

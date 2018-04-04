@@ -59,16 +59,16 @@ public class UploadFragment extends MvpAppCompatFragment
     @Override
     public void setUploadStatus(Integer intStatus) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            progressBar.setProgress(intStatus, true);
+            progressBar.setProgress(progressBar.getProgress() + intStatus, true);
         }
         else {
-            progressBar.setProgress(intStatus);
+            progressBar.setProgress(progressBar.getProgress() + intStatus);
         }
     }
 
     @Override
     public void setTextStatus(Integer intStatus, Integer endUpload) {
-         textView.setText(String.format("Загружено %sиз %s", String.valueOf(intStatus), String.valueOf(endUpload)));
+         textView.setText(String.valueOf(intStatus) + " из " + String.valueOf(endUpload));
     }
 
 

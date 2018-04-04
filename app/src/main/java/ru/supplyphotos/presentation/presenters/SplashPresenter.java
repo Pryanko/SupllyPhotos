@@ -67,7 +67,7 @@ public class SplashPresenter extends MvpPresenter<BaseViewActivity> implements B
 
     //implements
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
 
     }
 

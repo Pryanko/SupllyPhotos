@@ -2,10 +2,14 @@ package ru.supplyphotos.network;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.internal.http2.Header;
 import retrofit2.Call;
@@ -58,8 +62,8 @@ public interface ApiService {
 
     @GET("order-item-create")
     Flowable<OrderItemId> createOrderItem(@Query("access_token") String token,
-                                            @Query("order_id") Integer order_id,
-                                            @Query("service_id") Integer service_id);
+                                        @Query("order_id") Integer order_id,
+                                        @Query("service_id") Integer service_id);
 
     @GET("photo-add")
     Flowable<PhotoId> getPhotoId(@Query("access_token") String token,
@@ -75,22 +79,25 @@ public interface ApiService {
     @POST()
     Flowable<ResponseBody> uploadPhoto(@Url String url, @Part MultipartBody.Part partImage);
 
-    
 
+    
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(API_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            
             //Для всех запросов используется шедулер созданный выше.
             .addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .build();
 
+
+
 }
 //http://photo.it33.ru/api/register
 
 /**
- * register - стартовая регистрация дивайса
+ * register - стартовая регистрация девайса
  * study - для экрана обучения
  * category - категории услуг
  */

@@ -88,6 +88,19 @@ public class SettingsHelper implements SettingInterface {
     }
 
     @Override
+    public Integer getOrderItemId(){
+        return sharedPreferences.getInt("order_item_id", 0);
+    }
+
+    @Override
+    public void openOrderId(Boolean isOpenOrderItemId, Integer ordreItemId){
+        SharedPreferences.Editor settingEditor = sharedPreferences.edit();
+        settingEditor.putBoolean("open_order_id", isOpenOrderItemId);
+        settingEditor.putInt("order_item_id", ordreItemId);
+        settingEditor.apply();
+    }
+
+    @Override
     public Integer getSelectedServiceId(){
         return sharedPreferences.getInt(ITEM_SERVICE_ID, 0);
     }

@@ -32,7 +32,7 @@ public interface BasePresenter  {
     }
 
     interface Contracts {
-        void onError();
+        void onError(Throwable throwable);
 
         void destroyView();
     }

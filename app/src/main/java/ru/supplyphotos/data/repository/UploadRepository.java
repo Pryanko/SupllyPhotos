@@ -2,22 +2,33 @@ package ru.supplyphotos.data.repository;
 
 import android.util.Log;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.db.DataBaseSource;
 import ru.supplyphotos.data.upload.PhotoIdFile;
 import ru.supplyphotos.data.upload.cloud_upload_url.UploadUrl;
+import ru.supplyphotos.data.upload.order_item_id.OrderItemId;
 import ru.supplyphotos.network.ApiService;
 import ru.supplyphotos.tools.mappers.Mappers;
 import ru.supplyphotos.tools.settings.SettingInterface;
+
+import static ru.supplyphotos.constants.Constants.API_URL;
 
 /**
  * @author Libgo on 03.04.2018.
@@ -34,14 +45,39 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
     }
 
     @Override
+    public Flowable<OrderItemId> createOrderItem(){
+        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        return apiService.createOrder(settingInterface.getDeviceToken())
+                .flatMap(orderId -> apiService.createOrderItem(settingInterface.getDeviceToken(),
+                        orderId.getData().getOrderId(), settingInterface.getSelectedServiceId()));
+
+    }
+
+    @Override
     public Flowable<ResponseBody> startingUploadImage(){
 
-        ApiService apiService = ApiService.retrofit.create(ApiService.class);
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
 
-        Flowable<List<UploadUrl>> single = apiService.createOrder(settingInterface.getDeviceToken())
-                .concatMap(orderId -> apiService.createOrderItem(settingInterface.getDeviceToken(),
-                        orderId.getData().getOrderId(), settingInterface.getSelectedServiceId()))
-                .map(orderItemId -> Mappers.mapListImageSelected(orderItemId, dataBaseSource.getSelectedList()))
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .client(okHttpClient)
+                //Для всех запросов используется шедулер созданный выше.
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+
+
+
+
+        ApiService apiService = retrofit.create(ApiService.class);
+
+                 Flowable<List<UploadUrl>> single = Flowable.just(Mappers.mapListImageSelected
+                         (settingInterface.getOrderItemId(), dataBaseSource.getSelectedList()))
                 .concatMap(Flowable::fromIterable)
                 .concatMap(imageFile -> apiService.getPhotoId(settingInterface.getDeviceToken(),
                         imageFile.getItemOrderId(), imageFile.getNameImage(),
@@ -49,7 +85,7 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
                 .concatMap(photoId -> apiService.getUploadUrl(settingInterface.getDeviceToken(),
                         photoId.getData().getPhotoId()))
                 .toList()
-                .toFlowable();
+                         .toFlowable();
 
         Flowable<List<File>> listSingle = Flowable.just(Mappers.mapFileList(dataBaseSource.getSelectedList()));
 
@@ -68,6 +104,9 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
     }
 
 
+    public Integer getMaxProgressBar(){
+        return dataBaseSource.getSizeListSelectedItems();
+    }
 
 
 

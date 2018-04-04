@@ -44,7 +44,7 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     private void getTestInfo(){
         disposable = appRepository.getListService(settingInterface.getSelectedItemCategory().getId())
                 .subscribe(itemServices -> getViewState().testStart(settingInterface
-                        .getSelectedItemCategory(), itemServices), throwable -> onError());
+                        .getSelectedItemCategory(), itemServices), this::onError);
     }
 
 
@@ -61,7 +61,7 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     }
 
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
 
     }
 

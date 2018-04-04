@@ -70,7 +70,7 @@ public class GalleryPresenter extends MvpPresenter<ContractsGalleryFragmentView.
     }
 
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
 
     }
 

@@ -75,7 +75,7 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
 
 
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
 
     }
 

@@ -56,7 +56,7 @@ public class MainPresenter  extends MvpPresenter<MainView> implements BasePresen
    
 
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
 
     }
 

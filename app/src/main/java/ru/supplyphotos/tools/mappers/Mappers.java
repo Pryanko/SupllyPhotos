@@ -48,13 +48,11 @@ public class Mappers {
     public static List<PhotoIdFile> filterListZip(List<UploadUrl> uploadUrls, List<File> files) {
         List<PhotoIdFile> photoIdFiles = new ArrayList<>();
 
-        for (UploadUrl uploadUrl : uploadUrls){
-            for (File file : files){
-                PhotoIdFile photoIdFile = new PhotoIdFile();
-                photoIdFile.setFile(file);
-                photoIdFile.setUploadUrl(uploadUrl.getData().getUrl());
-                photoIdFiles.add(photoIdFile);
-            }
+        for (int i = 0; i < uploadUrls.size(); i++){
+            PhotoIdFile photoIdFile = new PhotoIdFile();
+            photoIdFile.setUploadUrl(uploadUrls.get(i).getData().getUrl());
+            photoIdFile.setFile(files.get(i));
+            photoIdFiles.add(photoIdFile);
         }
                                             return photoIdFiles;
 
@@ -72,7 +70,7 @@ public class Mappers {
 
 
 
-    public static List<ImageFile> mapListImageSelected(OrderItemId orderItemId,
+    public static List<ImageFile> mapListImageSelected(Integer orderItemId,
                                              List<ItemStorageImage> itemStorageImages){
          List<ImageFile> imageFiles = new ArrayList<>();
          for (ItemStorageImage itemStorageImage : itemStorageImages){
@@ -81,7 +79,7 @@ public class Mappers {
              imageFile.setPath(itemStorageImage.getPath());
              imageFile.setFile(new File(itemStorageImage.getPath()));
              imageFile.setNameImage(imageFile.getFile().getName());
-             imageFile.setItemOrderId(orderItemId.getData().getOrderItemId());
+             imageFile.setItemOrderId(orderItemId);
              imageFiles.add(imageFile);
          }
          return imageFiles;
