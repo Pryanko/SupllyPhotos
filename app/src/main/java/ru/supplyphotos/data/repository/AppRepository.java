@@ -39,8 +39,14 @@ public class AppRepository implements BaseAppRepository.GetRepository {
         return RxNetwork.getListCategory();
     }
 
+
+
     public Observable<List<ItemService>> getListService(Integer service_id){
         return RxNetwork.getListService(service_id);
+    }
+
+    public Observable<ItemService> getItemServiceForDescription(Integer service_id){
+        return RxNetwork.getItemSrvice(service_id);
     }
 
 

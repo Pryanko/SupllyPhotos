@@ -3,6 +3,7 @@ package ru.supplyphotos.presentation.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,6 +16,7 @@ import butterknife.ButterKnife;
 import ru.supplyphotos.App;
 import ru.supplyphotos.R;
 import ru.supplyphotos.presentation.fragments.category.CategoryFragment;
+import ru.supplyphotos.presentation.fragments.description.DescriptionFragment;
 import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.fragments.manuals.ManualFragment;
 import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
@@ -24,6 +26,7 @@ import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.android.SupportFragmentNavigator;
 
 import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
+import static ru.supplyphotos.constants.Constants.DESCRIPTION_SCREEN;
 import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
 import static ru.supplyphotos.constants.Constants.MANUAL_SCREEN;
 import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
@@ -46,6 +49,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
             R.id.frame_for_fragments) {
 
 
+        @NonNull
         @Override
         protected Fragment createFragment(String screenKey, Object data) {
             switch (screenKey) {
@@ -61,6 +65,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                     return new HeadFragment();
                 case UPLOAD_SCREEN:
                     return new UploadFragment();
+                case DESCRIPTION_SCREEN:
+                    return new DescriptionFragment();
                 default:
                     throw new RuntimeException("“Unknown screen key!”");
             }

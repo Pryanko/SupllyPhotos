@@ -2,6 +2,8 @@ package ru.supplyphotos.presentation.fragments.category;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +15,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.facebook.drawee.view.SimpleDraweeView;
+
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +63,7 @@ public class CategoryFragment extends MvpAppCompatFragment implements
         categoryAdapter = new CategoryAdapter();
 
 
+
     }
 
     @Nullable
@@ -65,6 +71,7 @@ public class CategoryFragment extends MvpAppCompatFragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         ButterKnife.bind(this, view);
+
         categoryRecycler.addItemDecoration(new SpaceDecoration(12));
         categoryRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;

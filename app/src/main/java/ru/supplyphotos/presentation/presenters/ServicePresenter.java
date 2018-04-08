@@ -14,7 +14,8 @@ import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
 import ru.terrakok.cicerone.Router;
 
-import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
+import static ru.supplyphotos.constants.Constants.DESCRIPTION_SCREEN;
+
 
 /**
  * @author Libgo on 24.03.2018.
@@ -73,6 +74,6 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     @Override
     public void touchItemService(Integer service_id) {
         settingInterface.saveSelectedServiceId(service_id);
-        router.navigateTo(HEAD_SCREEN);
+        router.navigateTo(DESCRIPTION_SCREEN);
     }
 }

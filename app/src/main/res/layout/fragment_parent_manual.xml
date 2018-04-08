@@ -36,7 +36,7 @@
         app:piv_animationType="drop"
         app:piv_dynamicCount="true"
         app:piv_interactiveAnimation="true"
-        app:piv_selectedColor="@color/colorHeadPrimary"
+        app:piv_selectedColor="@color/colorPrimaryDark"
         app:piv_unselectedColor="@color/colorGray"
         app:piv_viewPager="@id/page_viewer_for_child_manuals" />
 
@@ -57,25 +57,25 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-        <info.hoang8f.widget.FButton
+        <Button
             android:id="@+id/button_miss"
             android:layout_marginTop="4dp"
-            fbutton:buttonColor="#6792ff"
+            android:background="@drawable/text_view_count_print"
             android:layout_marginEnd="2dp"
             android:layout_marginStart="2dp"
             android:layout_height="40dp"
             android:text="@string/miss"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             />
 
-            <info.hoang8f.widget.FButton
+            <Button
                 android:id="@+id/button_next"
-                fbutton:buttonColor="#ff6792ff"
+                android:background="@drawable/text_view_count_print"
                 android:layout_marginTop="4dp"
                 android:text="@string/next"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginEnd="2dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"

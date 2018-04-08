@@ -1,6 +1,6 @@
 package ru.supplyphotos.presentation.presenters;
 
-import com.arellomobile.mvp.MvpPresenter;
+
 
 /**
  * @author or libgo on 12.01.2018.
@@ -8,6 +8,12 @@ import com.arellomobile.mvp.MvpPresenter;
 
 public interface BasePresenter  {
 
+
+
+    interface Description extends Contracts{
+        void nextScreen();
+
+    }
 
 
     interface Upload extends Contracts{

@@ -4,25 +4,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
 
+      
+
+        <View
+            android:id="@+id/view_category"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:layout_height="42dp"
+            />
+
+        <View
+            android:layout_below="@+id/view_category"
+
+            android:layout_width="match_parent"
+            android:background="@drawable/decor_category_fragment"
+            android:layout_height="140dp"
+            />
 
 
-
+        <TextView
+            android:id="@+id/text_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/view_category"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:text="Выбирtте категорию"
+            android:textSize="16sp" />
 
 
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/view_category"
             android:id="@+id/category_recycler"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_below="@+id/category_top_image"
+           
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:background="#00ffffff"
+            app:layout_collapseMode="pin"/>
 
 </RelativeLayout>

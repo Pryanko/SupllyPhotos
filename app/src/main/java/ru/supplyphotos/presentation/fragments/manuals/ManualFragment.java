@@ -12,26 +12,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import info.hoang8f.widget.FButton;
-import ru.supplyphotos.App;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.manuals.Guide;
 import ru.supplyphotos.presentation.activities.MainActivity;
 import ru.supplyphotos.presentation.adapters.ViewPagerAdapterManual;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
-import ru.supplyphotos.presentation.fragments.head.HeadFragment;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
 
 /**
@@ -46,9 +41,9 @@ public class ManualFragment extends MvpAppCompatFragment
     @BindView(R.id.dialog_manuals_message)
     TextView textDialogMessage;
     @BindView(R.id.dialog_positive_button)
-    FButton buttonPositive;
+    Button buttonPositive;
     @BindView(R.id.dialog_negative_button)
-    FButton buttonNegative;     */
+    Button buttonNegative;     */
     /**
      * Бинды Алерта временно не трогаем
      */
@@ -62,9 +57,9 @@ public class ManualFragment extends MvpAppCompatFragment
     @BindView(R.id.bottom_view)
     CardView bottomCard;
     @BindView(R.id.button_miss)
-    FButton buttonMiss;
+    Button buttonMiss;
     @BindView(R.id.button_next)
-    FButton buttonNext;
+    Button buttonNext;
     @BindView(R.id.progressBarManual)
     ProgressBar progressBar;
 
@@ -99,12 +94,7 @@ public class ManualFragment extends MvpAppCompatFragment
     @Override
     public void startShow(int size, List<Guide> list){
         //Button init
-        buttonMiss.setShadowEnabled(false);
-        buttonMiss.setCornerRadius(4);
-        buttonMiss.setButtonColor(0xff6792ff);
-        buttonNext.setShadowEnabled(false);
-        buttonNext.setCornerRadius(4);
-        buttonNext.setButtonColor(0xff6792ff);
+
         //ViewPager fill
         viewPagerAdapterManual.addContentFragments(size, list);
         viewPager.setAdapter(viewPagerAdapterManual);
@@ -165,18 +155,13 @@ public class ManualFragment extends MvpAppCompatFragment
         View dialogView = inflater.inflate(R.layout.alert_show_dialog_manuals, null);
         TextView textDialogTitle = (TextView) dialogView.findViewById(R.id.dialog_manuals_title);
         TextView textDialogMessage = (TextView) dialogView.findViewById(R.id.dialog_manuals_message);
-        FButton buttonPositive = (FButton) dialogView.findViewById(R.id.dialog_positive_button);
-        FButton buttonNegative = (FButton) dialogView.findViewById(R.id.dialog_negative_button);
+        Button buttonPositive = (Button) dialogView.findViewById(R.id.dialog_positive_button);
+        Button buttonNegative = (Button) dialogView.findViewById(R.id.dialog_negative_button);
         textDialogTitle.setText(title);
         textDialogMessage.setText(message);
         buttonPositive.setText(posButton);
         buttonNegative.setText(negButton);
-        buttonPositive.setShadowEnabled(false);
-        buttonNegative.setShadowEnabled(false);
-        buttonPositive.setCornerRadius(4);
-        buttonNegative.setCornerRadius(4);
-        buttonPositive.setButtonColor(0xff6792ff);
-        buttonNegative.setButtonColor(0xff6792ff);
+
         alertDialog.setView(dialogView);
         final AlertDialog dialog = alertDialog.create();
 

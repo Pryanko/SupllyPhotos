@@ -1,23 +1,15 @@
 package ru.supplyphotos.network;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import okhttp3.internal.http2.Header;
-import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -39,7 +31,7 @@ import static ru.supplyphotos.constants.Constants.API_URL;
  */
 
 public interface ApiService {
-
+    //region Get
     @GET("study")
     Observable<Manual> getManuals();
 
@@ -52,11 +44,11 @@ public interface ApiService {
     @GET("service")
     Observable<Services> getService(@Query("category_id") Integer id_service);
 
+    @GET("service")
+    Observable<Services> getDescriptionService(@Query("id") Integer id_service);
+    //endregion
 
-    
-
-
-     //Upload
+     //region Upload
      @GET("order-create")
      Flowable<OrderId> createOrder(@Query("access_token") String token);
 
@@ -78,14 +70,13 @@ public interface ApiService {
     @Multipart
     @POST()
     Flowable<ResponseBody> uploadPhoto(@Url String url, @Part MultipartBody.Part partImage);
-
+    //endregion
 
     
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(API_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            
             //Для всех запросов используется шедулер созданный выше.
             .addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())

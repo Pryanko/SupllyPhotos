@@ -45,6 +45,15 @@ public class Mappers {
         return itemService.getData();
     }
 
+    public static ItemService mapItemService (Services itemService){
+        if (itemService != null) {
+            return itemService.getData().get(0);
+        }
+        else {
+            return new ItemService();
+        }
+    }
+
     public static List<PhotoIdFile> filterListZip(List<UploadUrl> uploadUrls, List<File> files) {
         List<PhotoIdFile> photoIdFiles = new ArrayList<>();
 

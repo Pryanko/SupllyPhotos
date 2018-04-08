@@ -37,9 +37,15 @@ public class RxNetwork {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static Observable<List<ItemService>> getListService(Integer sevice_id){
-        return apiService.getService(sevice_id)
+    public static Observable<List<ItemService>> getListService(Integer service_id){
+        return apiService.getService(service_id)
                 .map(Mappers::mapListCategory)
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<ItemService> getItemSrvice(Integer service_id){
+        return apiService.getDescriptionService(service_id)
+                .map(Mappers::mapItemService)
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

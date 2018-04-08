@@ -24,7 +24,8 @@ public interface ContractsFragmentView {
     interface DescriptionView extends BaseViewFragment{
 
 
-
+        //implements
+        void startDescription(ItemService itemService);
     }
 
 
