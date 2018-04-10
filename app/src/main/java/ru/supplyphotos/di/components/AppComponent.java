@@ -15,6 +15,7 @@ import ru.supplyphotos.di.modules.DataBaseModule;
 import ru.supplyphotos.di.modules.NavigationModule;
 import ru.supplyphotos.di.modules.RepositoryModule;
 import ru.supplyphotos.di.modules.SettingModule;
+import ru.supplyphotos.presentation.presenters.Representative;
 import ru.supplyphotos.tools.settings.SettingsHelper;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
@@ -41,6 +42,8 @@ public interface AppComponent {
     ResourceManager getResourceManager();
 
     SettingsHelper getSettingsHelper();
+
+    Representative getRepresentative();
 
     StorageManager getStorageManager();
 

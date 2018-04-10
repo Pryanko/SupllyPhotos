@@ -14,7 +14,9 @@ import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
 import ru.terrakok.cicerone.Router;
 
+import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
 import static ru.supplyphotos.constants.Constants.DESCRIPTION_SCREEN;
+import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 
 
 /**
@@ -28,11 +30,13 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     private AppRepository appRepository;
     private Router router;
     private Disposable disposable;
+    private Representative representative;
 
     public ServicePresenter() {
         this.settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
         this.appRepository = App.getAppComponent().getAppRepository();
         this.router = App.getAppComponent().getRouter();
+        representative = App.getAppComponent().getRepresentative();
        // getViewState().delegateTouchItemAdapter(this);
     }
 
@@ -40,6 +44,7 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
     public void attachView(ContractsFragmentView.ServiceView view) {
         super.attachView(view);
         getViewState().delegateTouchItemAdapter(this);
+        representative.switchTypeScreen(SERVICES_SCREEN);
     }
 
     private void getTestInfo(){

@@ -12,6 +12,7 @@ import dagger.Reusable;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.resource.ResourceManager;
 import ru.supplyphotos.data.storage.StorageManager;
+import ru.supplyphotos.presentation.presenters.Representative;
 import ru.supplyphotos.tools.settings.SettingInterface;
 import ru.supplyphotos.tools.settings.SettingsHelper;
 
@@ -61,6 +62,12 @@ public class SettingModule {
     @Reusable
     SharedPreferences sharedPreferences(Context context){
          return context.getSharedPreferences(APP_SETTINGS, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @Reusable
+    Representative representative(){
+        return new Representative();
     }
 
 }

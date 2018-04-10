@@ -8,9 +8,17 @@ package ru.supplyphotos.presentation.presenters;
 
 public interface BasePresenter  {
 
+    interface Basket extends Contracts{
 
+    }
+
+    interface Register extends Contracts {
+
+        void nextScreen();
+    }
 
     interface Description extends Contracts{
+
         void nextScreen();
 
     }
@@ -37,10 +45,25 @@ public interface BasePresenter  {
         void nextScreen();
     }
 
+    interface ControlForToolbar{
+
+        void setTypeScreen(String typeScreen);
+
+    }
+
+    interface HeadView extends Contracts{
+
+        void openBasket();
+
+    }
+
     interface Contracts {
+
         void onError(Throwable throwable);
 
         void destroyView();
+
+
     }
 
 }

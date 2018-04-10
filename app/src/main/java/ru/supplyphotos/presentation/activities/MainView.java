@@ -10,4 +10,5 @@ public interface MainView extends MvpView {
 
     void startShow(boolean firstRun);
 
+    void controlToolbar(boolean isControl, boolean isVisBasket);
 }

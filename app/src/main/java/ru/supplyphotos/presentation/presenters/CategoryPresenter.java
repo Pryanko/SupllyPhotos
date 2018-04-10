@@ -15,6 +15,7 @@ import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
 import ru.terrakok.cicerone.Router;
 
+import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
 import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 
 /**
@@ -25,7 +26,7 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
         implements BasePresenter.Category, ContractsAdapters.ItemCategoryTouch {
 
 
-
+    private Representative representative;
     private CompositeDisposable compositeDisposable;
     private AppRepository appRepository;
     private SettingInterface settingInterface;
@@ -38,6 +39,7 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
            appRepository = App.getAppComponent().getAppRepository();
            settingInterface = App.getAppComponent().getSettingsHelper()
                 .getSettingsInterface();
+           representative = App.getAppComponent().getRepresentative();
     }
 
 
@@ -47,6 +49,12 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
         compositeDisposable.add(appRepository.getListCategory()
                 .subscribe(list -> getViewState().startShow(list), this::handleError));
         getViewState().delegateTouchItemAdapter(this);
+    }
+
+    @Override
+    public void attachView(ContractsFragmentView.CategoryView view) {
+        super.attachView(view);
+        //representative.switchTypeScreen(CATEGORY_SCREEN);
     }
 
     @Override

@@ -6,9 +6,7 @@ import android.util.Log;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Flowable;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -21,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import ru.supplyphotos.App;
 import ru.supplyphotos.data.db.DataBaseSource;
-import ru.supplyphotos.data.upload.PhotoIdFile;
 import ru.supplyphotos.data.upload.cloud_upload_url.UploadUrl;
 import ru.supplyphotos.data.upload.order_item_id.OrderItemId;
 import ru.supplyphotos.network.ApiService;
@@ -64,7 +61,8 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory
+                        .createWithScheduler(Schedulers.io()))
                 .client(okHttpClient)
                 //Для всех запросов используется шедулер созданный выше.
                 .addConverterFactory(GsonConverterFactory.create())
@@ -87,16 +85,22 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
                 .toList()
                          .toFlowable();
 
-        Flowable<List<File>> listSingle = Flowable.just(Mappers.mapFileList(dataBaseSource.getSelectedList()));
+        Flowable<List<File>> listSingle = Flowable.just
+                (Mappers.mapFileList(dataBaseSource.getSelectedList()));
 
-         return Flowable.zip(single, listSingle, (BiFunction<List<UploadUrl>, List<File>, List<PhotoIdFile>>) Mappers::filterListZip)
+         return Flowable.zip(single, listSingle, Mappers::filterListZip)
                  .concatMap(Flowable::fromIterable)
                  .concatMap(photoIdFile -> {
 
-                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), photoIdFile.getFile());
-                     MultipartBody.Part body = MultipartBody.Part.createFormData("file", photoIdFile.getFile().getName(), requestFile);
+                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),
+                             photoIdFile.getFile());
+
+                     MultipartBody.Part body = MultipartBody.Part.createFormData("file",
+                             photoIdFile.getFile().getName(), requestFile);
+
                      Log.d("ZZZZZ", photoIdFile.getUploadUrl());
                      Log.d("ZZZZZ", photoIdFile.getFile().getName());
+
                      return apiService.uploadPhoto(photoIdFile.getUploadUrl(), body);
                  });
 

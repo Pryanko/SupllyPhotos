@@ -24,6 +24,7 @@ import ru.supplyphotos.presentation.fragments.head.gallery_fragments.PhoneGaller
 import ru.supplyphotos.presentation.fragments.head.gallery_fragments.VkGalleryFragment;
 import ru.terrakok.cicerone.Router;
 
+import static ru.supplyphotos.constants.Constants.REGISTER_SCREEN;
 import static ru.supplyphotos.constants.Constants.UPLOAD_SCREEN;
 
 
@@ -65,7 +66,7 @@ public class HeadFragment extends MvpAppCompatFragment
     private void initListener() {
 
         nextButton.setOnClickListener(v -> {
-             router.navigateTo(UPLOAD_SCREEN);
+             router.navigateTo(REGISTER_SCREEN);
         });
 
 

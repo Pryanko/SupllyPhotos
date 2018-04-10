@@ -35,6 +35,8 @@ public class Constants {
     //Names Screens
 
     public final static String CATEGORY_SCREEN = "CATEGORY_SCREEN";
+    public final static String BASKET_SCREEN = "BASKET_SCREEN";
+    public final static String REGISTER_SCREEN = "REGISTER_SCREEN";
     public final static String DESCRIPTION_SCREEN = "DESCRIPTION_SCREEN";
     public final static String SERVICES_SCREEN = "SERVICES_SCREEN";
     public final static String MANUAL_SCREEN = "MANUAL_SCREEN";

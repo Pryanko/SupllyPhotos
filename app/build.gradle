@@ -7,7 +7,7 @@ android {
     defaultConfig {
 
         applicationId "ru.supplyphotos"
-
+        vectorDrawables.useSupportLibrary = true
         buildToolsVersion setup.buildTools
         minSdkVersion setup.minSdk
         targetSdkVersion setup.compileSdk

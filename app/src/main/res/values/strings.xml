@@ -21,4 +21,5 @@
     <string name="wait">Раздел находится в разработке</string>
     <string name="default_count_print">1</string>
     <string name="description">description</string>
+    <string name="changeCategory">Выбирете категорию</string>
 </resources>

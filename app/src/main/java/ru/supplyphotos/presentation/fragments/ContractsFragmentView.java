@@ -19,10 +19,16 @@ import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 
 public interface ContractsFragmentView {
 
+    interface BasketView extends BaseViewFragment{
 
+    }
+
+
+    interface RegisterView extends BaseViewFragment{
+
+    }
 
     interface DescriptionView extends BaseViewFragment{
-
 
         //implements
         void startDescription(ItemService itemService);
@@ -36,6 +42,8 @@ public interface ContractsFragmentView {
         void setUploadStatus(Integer intStatus);
 
         void setTextStatus(Integer intStatus, Integer endUpload);
+
+        void setCompleteText(String s);
     }
 
 

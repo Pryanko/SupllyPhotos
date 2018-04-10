@@ -77,13 +77,13 @@ public class CategoryFragment extends MvpAppCompatFragment implements
         return view;
     }
 
-    @Override
+  /*  @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar, menu);
         menu.findItem(R.id.shop_button);
         super.onCreateOptionsMenu(menu, inflater);
 
-    }
+    }      */
 
     @Override
     public void startShow(List<ItemCategory> list){

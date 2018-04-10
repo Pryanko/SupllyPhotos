@@ -27,6 +27,8 @@ public class UploadFragment extends MvpAppCompatFragment
 
     @BindView(R.id.progressBarUpload)
     ProgressBar progressBar;
+    @BindView(R.id.progressBar_upload_wait)
+    ProgressBar waitProgressBar;
     @BindView(R.id.textProgressBar)
     TextView textView;
 
@@ -71,6 +73,11 @@ public class UploadFragment extends MvpAppCompatFragment
          textView.setText(String.valueOf(intStatus) + " из " + String.valueOf(endUpload));
     }
 
+    @Override
+    public void setCompleteText(String s){
+        textView.setText(s);
+    }
+
 
 
     @Override
@@ -83,9 +90,11 @@ public class UploadFragment extends MvpAppCompatFragment
         if(loading)
         {
             progressBar.setVisibility(View.VISIBLE);
+            waitProgressBar.setVisibility(View.VISIBLE);
         }
         else {
-            progressBar.setVisibility(View.GONE);
+            waitProgressBar.setVisibility(View.GONE);
+           // progressBar.setVisibility(View.GONE);
         }
 
     }

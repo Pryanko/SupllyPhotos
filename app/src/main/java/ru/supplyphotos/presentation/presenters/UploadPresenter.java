@@ -9,7 +9,9 @@ import java.io.IOException;
 
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.parallel.ParallelFlowable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
@@ -30,6 +32,7 @@ public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadVi
 
     private SettingInterface settingInterface;
     private UploadRepository uploadRepository;
+    CompositeDisposable compositeDisposable;
     private Integer i = 0;
 
     public UploadPresenter() {
@@ -41,10 +44,11 @@ public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadVi
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         getViewState().showLoading(true);
-        Disposable disposable = uploadRepository.createOrderItem()
-                .subscribe(this::createOrderItemId);
+        getViewState().setTextStatus(i, uploadRepository.getMaxProgressBar());
         getViewState().setUploadMaxProgress(uploadRepository.getMaxProgressBar());
 
+        compositeDisposable.add(uploadRepository.createOrderItem()
+                .subscribe(this::createOrderItemId));
 
     }
 
@@ -52,10 +56,13 @@ public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadVi
               settingInterface.openOrderId(true,
                       orderItemId.getData().getOrderItemId());
               Log.d("ORDER ITEM ID", String.valueOf(orderItemId.getData().getOrderItemId()));
-        Disposable disposable = uploadRepository.startingUploadImage()
-                .subscribeOn(Schedulers.io())
+
+
+        compositeDisposable.add(uploadRepository.startingUploadImage().parallel().runOn(Schedulers.io())
+                .sequential()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::OkUpload, this::onError);
+                .subscribe(this::OkUpload, this::onError));
+
 
     }
 
@@ -63,11 +70,18 @@ public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadVi
         Log.d("Header",responseBody.toString());
         getViewState().setUploadStatus(1);
         i++;
-        getViewState().setTextStatus(i, uploadRepository.getMaxProgressBar());
+        if(i.equals(uploadRepository.getMaxProgressBar())){
+            getViewState().showLoading(false);
+            getViewState().setCompleteText("Спасибо, все ок!");
+        }else {
+            getViewState().setTextStatus(i, uploadRepository.getMaxProgressBar());
+        }
     }
 
     @Override
     public void onError(Throwable throwable) {
+           Log.d("LOGS_SCREEN", throwable.getMessage());
+
 
     }
 

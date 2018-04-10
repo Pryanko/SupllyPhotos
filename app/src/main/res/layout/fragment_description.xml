@@ -10,7 +10,7 @@
         android:id="@+id/bg_description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:actualImageResource="@drawable/bg_description"
+        app:actualImageResource="@drawable/bg_register"
         app:actualImageScaleType="focusCrop"/>
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -59,6 +59,45 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/description" />
+
+            <ImageView
+                android:layout_below="@+id/text_description"
+                android:id="@+id/image_description_size"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_ruler"
+                 />
+
+            <TextView
+                android:id="@+id/text_description_size"
+                android:layout_toRightOf="@+id/image_description_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/image_description_size"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="64dp"
+                android:text="60x60 (пример)" />
+
+            <ImageView
+                android:id="@+id/image_description_time"
+                android:layout_below="@+id/image_description_size"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignStart="@+id/text_description"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_time" />
+
+            <TextView
+                android:id="@+id/text_description_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/image_description_time"
+                android:layout_alignStart="@+id/text_description_size"
+                android:text="24 часа (пример)" />
 
 
         </RelativeLayout>

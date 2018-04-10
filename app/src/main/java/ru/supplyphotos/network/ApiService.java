@@ -91,4 +91,5 @@ public interface ApiService {
  * register - стартовая регистрация девайса
  * study - для экрана обучения
  * category - категории услуг
+ * 28996a16bfb41400985f0088ba006b07
  */

@@ -8,7 +8,11 @@
       android:id="@+id/shop_button"
       android:icon="@drawable/ic_shopping_cart"
       android:title="@string/back"
-      app:showAsAction="always|collapseActionView"
-      app:actionViewClass="android.widget.ImageView"/>
+      app:showAsAction="ifRoom"
+      app:actionViewClass="android.widget.ImageView" />
+
+
+  
+
 
 </menu>
