@@ -1,9 +1,12 @@
 package ru.supplyphotos.data.db;
 
 import android.util.Log;
+
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.realm.Realm;
@@ -15,14 +18,19 @@ import ru.supplyphotos.data.storage.ItemStorageImage;
 /**
  * @author libgo (01.04.2018)
  */
-public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBase.UpdateTable{
+@Singleton
+public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBase.UpdateTable {
 
     private RealmConfiguration configuration = new RealmConfiguration.Builder()
             .name("table_item_image.realm")
             .schemaVersion(0)
             .build();
 
-    public RealmDataBase.UpdateTable getTouchManager(){
+    @Inject
+    public DataBaseSource() {
+    }
+
+    public RealmDataBase.UpdateTable getTouchManager() {
         return this;
     }
 
@@ -47,7 +55,7 @@ public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBa
     }
 
     @Override
-    public boolean getFillImagesTable(){
+    public boolean getFillImagesTable() {
         Realm realm = Realm.getInstance(configuration);
         return realm.where(ItemStorageImage.class).findAll().size() == 0;
     }
@@ -77,13 +85,13 @@ public class DataBaseSource implements RealmDataBase.CreateGetTable, RealmDataBa
         realm.close();
     }
 
-    public RealmResults<ItemStorageImage> getSelectedList(){
+    public RealmResults<ItemStorageImage> getSelectedList() {
         Realm realm = Realm.getInstance(configuration);
         return realm.where(ItemStorageImage.class).equalTo("isSelected", true).findAll();
 
     }
 
-    public Integer getSizeListSelectedItems(){
+    public Integer getSizeListSelectedItems() {
         return getSelectedList().size();
     }
 }

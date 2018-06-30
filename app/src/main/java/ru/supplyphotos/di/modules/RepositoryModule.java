@@ -1,32 +1,25 @@
 package ru.supplyphotos.di.modules;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import dagger.Reusable;
 import ru.supplyphotos.data.repository.AppRepository;
-import ru.supplyphotos.data.repository.UploadRepository;
 
 /**
  * @author Libgo on 15.03.2018.
  */
 @Module
 @Reusable
-public class RepositoryModule {
+public interface RepositoryModule {
 
-
-    @Provides
     @Reusable
-    AppRepository appRepository(){
-        return new AppRepository();
-    }
+    AppRepository appRepository();
 
 
-    @Provides
-    @Reusable
-    UploadRepository uploadRepository() {
-        return new UploadRepository();
-    }
+//    @Provides
+//    @Reusable
+//    UploadRepository uploadRepository() {
+//        return new UploadRepository(dataBaseSource);
+//    }
 
 }

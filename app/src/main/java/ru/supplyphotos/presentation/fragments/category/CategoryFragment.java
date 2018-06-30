@@ -1,21 +1,14 @@
 package ru.supplyphotos.presentation.fragments.category;
 
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -26,15 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.category.ItemCategory;
-import ru.supplyphotos.presentation.activities.MainActivity;
 import ru.supplyphotos.presentation.adapters.CategoryAdapter;
 import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.adapters.decoration.SpaceDecoration;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
-import ru.supplyphotos.presentation.fragments.head.HeadFragment;
-import ru.supplyphotos.presentation.fragments.services.ServiceFragment;
 import ru.supplyphotos.presentation.presenters.CategoryPresenter;
-import ru.terrakok.cicerone.Router;
 
 /**
  * @author Libgo on 20.01.2018.

@@ -1,6 +1,6 @@
 <resources>
     //app
-    <string name="app_name">Suplly Photos</string>
+
     <string name="text">TEXT</string>
     //Alert show manual
     <string name="alert_show_manual_title">Серьезно?</string>
@@ -22,4 +22,5 @@
     <string name="default_count_print">1</string>
     <string name="description">description</string>
     <string name="changeCategory">Выбирете категорию</string>
+    <string name="go">Приступить</string>
 </resources>

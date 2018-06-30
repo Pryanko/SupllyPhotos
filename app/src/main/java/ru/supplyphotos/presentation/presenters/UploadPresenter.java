@@ -7,20 +7,15 @@ import com.arellomobile.mvp.MvpPresenter;
 
 import java.io.IOException;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.parallel.ParallelFlowable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Headers;
 import okhttp3.ResponseBody;
-import okhttp3.internal.http2.Header;
-import ru.supplyphotos.App;
 import ru.supplyphotos.data.repository.UploadRepository;
 import ru.supplyphotos.data.upload.order_item_id.OrderItemId;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
+import ru.supplyphotos.tools.settings.SettingsHelper;
 
 /**
  * @author Libgo on 03.04.2018.
@@ -30,14 +25,15 @@ import ru.supplyphotos.tools.settings.SettingInterface;
 public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadView>
         implements BasePresenter.Upload {
 
-    private SettingInterface settingInterface;
-    private UploadRepository uploadRepository;
-    CompositeDisposable compositeDisposable;
+    private final SettingInterface settingInterface;
+    private final UploadRepository uploadRepository;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private Integer i = 0;
 
-    public UploadPresenter() {
-        uploadRepository = App.getAppComponent().getUploadRepository();
-        settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
+    public UploadPresenter(UploadRepository uploadRepository,
+                           SettingsHelper settingsHelper) {
+        this.settingInterface = settingsHelper.getSettingsInterface();
+        this.uploadRepository = uploadRepository;
     }
 
     @Override
@@ -52,10 +48,10 @@ public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadVi
 
     }
 
-    private void createOrderItemId(OrderItemId orderItemId){
-              settingInterface.openOrderId(true,
-                      orderItemId.getData().getOrderItemId());
-              Log.d("ORDER ITEM ID", String.valueOf(orderItemId.getData().getOrderItemId()));
+    private void createOrderItemId(OrderItemId orderItemId) {
+        settingInterface.openOrderId(true,
+                orderItemId.getData().getOrderItemId());
+        Log.d("ORDER ITEM ID", String.valueOf(orderItemId.getData().getOrderItemId()));
 
 
         compositeDisposable.add(uploadRepository.startingUploadImage().parallel().runOn(Schedulers.io())
@@ -67,20 +63,20 @@ public class UploadPresenter extends MvpPresenter<ContractsFragmentView.UploadVi
     }
 
     private void OkUpload(ResponseBody responseBody) throws IOException {
-        Log.d("Header",responseBody.toString());
+        Log.d("Header", responseBody.toString());
         getViewState().setUploadStatus(1);
         i++;
-        if(i.equals(uploadRepository.getMaxProgressBar())){
+        if (i.equals(uploadRepository.getMaxProgressBar())) {
             getViewState().showLoading(false);
             getViewState().setCompleteText("Спасибо, все ок!");
-        }else {
+        } else {
             getViewState().setTextStatus(i, uploadRepository.getMaxProgressBar());
         }
     }
 
     @Override
     public void onError(Throwable throwable) {
-           Log.d("LOGS_SCREEN", throwable.getMessage());
+        Log.d("LOGS_SCREEN", throwable.getMessage());
 
 
     }

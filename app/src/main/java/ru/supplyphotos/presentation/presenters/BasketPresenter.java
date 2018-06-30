@@ -3,7 +3,6 @@ package ru.supplyphotos.presentation.presenters;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-import ru.supplyphotos.App;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 
 import static ru.supplyphotos.constants.Constants.BASKET_SCREEN;
@@ -15,10 +14,11 @@ import static ru.supplyphotos.constants.Constants.BASKET_SCREEN;
 public class BasketPresenter extends MvpPresenter<ContractsFragmentView.BasketView>
         implements BasePresenter.Basket {
 
-    private Representative representative;
+    private final Representative representative;
 
-    public BasketPresenter() {
-        representative = App.getAppComponent().getRepresentative();
+    public BasketPresenter(Representative representative) {
+
+        this.representative = representative;
     }
 
     @Override

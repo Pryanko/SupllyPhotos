@@ -1,18 +1,20 @@
 package ru.supplyphotos.presentation.presenters;
 
 
-
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
-import ru.supplyphotos.App;
 import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
+import ru.supplyphotos.tools.settings.SettingsHelper;
 import ru.terrakok.cicerone.Router;
 
 import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
@@ -26,20 +28,23 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
         implements BasePresenter.Category, ContractsAdapters.ItemCategoryTouch {
 
 
-    private Representative representative;
-    private CompositeDisposable compositeDisposable;
-    private AppRepository appRepository;
-    private SettingInterface settingInterface;
-    private Router router;
+    private final Representative representative;
+    private final CompositeDisposable compositeDisposable;
+    private final AppRepository appRepository;
+    private final SettingInterface settingInterface;
+    private final Router router;
 
-
-    public CategoryPresenter() {
-           router = App.getAppComponent().getRouter();
-           compositeDisposable = new CompositeDisposable();
-           appRepository = App.getAppComponent().getAppRepository();
-           settingInterface = App.getAppComponent().getSettingsHelper()
-                .getSettingsInterface();
-           representative = App.getAppComponent().getRepresentative();
+    @Inject
+    public CategoryPresenter(Representative representative,
+                             CompositeDisposable compositeDisposable,
+                             SettingsHelper settingsHelper,
+                             AppRepository appRepository,
+                             Router router) {
+        this.representative = representative;
+        this.compositeDisposable = compositeDisposable;
+        this.settingInterface = settingsHelper.getSettingsInterface();
+        this.appRepository = appRepository;
+        this.router = router;
     }
 
 
@@ -54,7 +59,7 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
     @Override
     public void attachView(ContractsFragmentView.CategoryView view) {
         super.attachView(view);
-        //representative.switchTypeScreen(CATEGORY_SCREEN);
+        representative.switchTypeScreen(CATEGORY_SCREEN);
     }
 
     @Override
@@ -65,7 +70,6 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
 
     private void handleError(Throwable throwable) {
     }
-
 
 
     @Override
@@ -81,9 +85,9 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
 
     @Override
     public void touchItemCategory(ItemCategory itemCategory) {
-        if(itemCategory != null){
-        settingInterface.saveSelectedItemCategory(itemCategory);
-        nextScreen();
+        if (itemCategory != null) {
+            settingInterface.saveSelectedItemCategory(itemCategory);
+            nextScreen();
             Log.d("ПРОВЕРКА", itemCategory.getName());
         }
 
@@ -91,7 +95,7 @@ public class CategoryPresenter extends MvpPresenter<ContractsFragmentView.Catego
 
     @Override
     public void nextScreen() {
-       router.navigateTo(SERVICES_SCREEN);
+        router.navigateTo(SERVICES_SCREEN);
     }
 }
 

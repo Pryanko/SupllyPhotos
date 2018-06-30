@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.supplyphotos.R;
 import ru.supplyphotos.data.answers.manuals.Guide;
-import ru.supplyphotos.presentation.activities.MainActivity;
+import ru.supplyphotos.presentation.activities.head.HeadActivity;
 import ru.supplyphotos.presentation.adapters.ViewPagerAdapterManual;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.presentation.presenters.ManualPresenter;
@@ -188,8 +188,8 @@ public class ManualFragment extends MvpAppCompatFragment
         super.onDestroy();
         Log.d("CLOSE", "YES");
         if(getActivity() != null){
-            MainActivity mainActivity = (MainActivity) getActivity();
-            mainActivity.setVisibilityToolbar(true);
+//            HeadActivity headActivity = (HeadActivity) getActivity();
+//            headActivity.setVisibilityToolbar(true);
         }
     }
 

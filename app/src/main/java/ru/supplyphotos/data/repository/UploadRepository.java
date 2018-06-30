@@ -2,10 +2,12 @@ package ru.supplyphotos.data.repository;
 
 import android.util.Log;
 
-
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -24,6 +26,7 @@ import ru.supplyphotos.data.upload.order_item_id.OrderItemId;
 import ru.supplyphotos.network.ApiService;
 import ru.supplyphotos.tools.mappers.Mappers;
 import ru.supplyphotos.tools.settings.SettingInterface;
+import ru.supplyphotos.tools.settings.SettingsHelper;
 
 import static ru.supplyphotos.constants.Constants.API_URL;
 
@@ -32,17 +35,17 @@ import static ru.supplyphotos.constants.Constants.API_URL;
  */
 public class UploadRepository implements BaseAppRepository.UploadRepository {
 
-    private DataBaseSource dataBaseSource;
+    private final DataBaseSource dataBaseSource;
     private SettingInterface settingInterface;
 
-
-    public UploadRepository() {
-        this.dataBaseSource = App.getAppComponent().getDataBaseSource();
-        this.settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
+    @Inject
+    public UploadRepository(DataBaseSource dataBaseSource, SettingsHelper settingsHelper) {
+        this.dataBaseSource = dataBaseSource;
+        this.settingInterface = settingsHelper.getSettingsInterface();
     }
 
     @Override
-    public Flowable<OrderItemId> createOrderItem(){
+    public Flowable<OrderItemId> createOrderItem() {
         ApiService apiService = ApiService.retrofit.create(ApiService.class);
         return apiService.createOrder(settingInterface.getDeviceToken())
                 .flatMap(orderId -> apiService.createOrderItem(settingInterface.getDeviceToken(),
@@ -51,7 +54,7 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
     }
 
     @Override
-    public Flowable<ResponseBody> startingUploadImage(){
+    public Flowable<ResponseBody> startingUploadImage() {
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -70,12 +73,10 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
                 .build();
 
 
-
-
         ApiService apiService = retrofit.create(ApiService.class);
 
-                 Flowable<List<UploadUrl>> single = Flowable.just(Mappers.mapListImageSelected
-                         (settingInterface.getOrderItemId(), dataBaseSource.getSelectedList()))
+        Flowable<List<UploadUrl>> single = Flowable.just(Mappers.mapListImageSelected
+                (settingInterface.getOrderItemId(), dataBaseSource.getSelectedList()))
                 .concatMap(Flowable::fromIterable)
                 .concatMap(imageFile -> apiService.getPhotoId(settingInterface.getDeviceToken(),
                         imageFile.getItemOrderId(), imageFile.getNameImage(),
@@ -83,41 +84,34 @@ public class UploadRepository implements BaseAppRepository.UploadRepository {
                 .concatMap(photoId -> apiService.getUploadUrl(settingInterface.getDeviceToken(),
                         photoId.getData().getPhotoId()))
                 .toList()
-                         .toFlowable();
+                .toFlowable();
 
         Flowable<List<File>> listSingle = Flowable.just
                 (Mappers.mapFileList(dataBaseSource.getSelectedList()));
 
-         return Flowable.zip(single, listSingle, Mappers::filterListZip)
-                 .concatMap(Flowable::fromIterable)
-                 .concatMap(photoIdFile -> {
+        return Flowable.zip(single, listSingle, Mappers::filterListZip)
+                .concatMap(Flowable::fromIterable)
+                .concatMap(photoIdFile -> {
 
-                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),
-                             photoIdFile.getFile());
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),
+                            photoIdFile.getFile());
 
-                     MultipartBody.Part body = MultipartBody.Part.createFormData("file",
-                             photoIdFile.getFile().getName(), requestFile);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file",
+                            photoIdFile.getFile().getName(), requestFile);
 
-                     Log.d("ZZZZZ", photoIdFile.getUploadUrl());
-                     Log.d("ZZZZZ", photoIdFile.getFile().getName());
+                    Log.d("ZZZZZ", photoIdFile.getUploadUrl());
+                    Log.d("ZZZZZ", photoIdFile.getFile().getName());
 
-                     return apiService.uploadPhoto(photoIdFile.getUploadUrl(), body);
-                 });
+                    return apiService.uploadPhoto(photoIdFile.getUploadUrl(), body);
+                });
 
 
     }
 
 
-    public Integer getMaxProgressBar(){
+    public Integer getMaxProgressBar() {
         return dataBaseSource.getSizeListSelectedItems();
     }
 
 
-
-
-
-
-
-
-    
 }

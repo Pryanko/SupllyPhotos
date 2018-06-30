@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import ru.supplyphotos.App;
@@ -22,15 +25,17 @@ import static ru.supplyphotos.constants.Constants.PREFIX_PATH_IMAGE;
 /**
  * @author Libgo on 30.03.2018.
  */
+@Singleton
 public class StorageManager implements AndroidStorageManger {
 
     private DataBaseSource dataBaseSource;
     private ContentResolver contentResolver;
     //private SettingInterface settingInterface; //для получения сервис id
 
-    public StorageManager(ContentResolver contentResolver) {
+    @Inject
+    StorageManager(ContentResolver contentResolver, DataBaseSource dataBaseSource) {
         this.contentResolver = contentResolver;
-        this.dataBaseSource = App.getAppComponent().getDataBaseSource();
+        this.dataBaseSource = dataBaseSource;
     }
 
 

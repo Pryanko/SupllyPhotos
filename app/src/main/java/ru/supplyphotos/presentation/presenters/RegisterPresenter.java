@@ -3,7 +3,8 @@ package ru.supplyphotos.presentation.presenters;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-import ru.supplyphotos.App;
+import javax.inject.Inject;
+
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.terrakok.cicerone.Router;
 
@@ -14,16 +15,17 @@ import static ru.supplyphotos.constants.Constants.UPLOAD_SCREEN;
  */
 @InjectViewState
 public class RegisterPresenter extends MvpPresenter<ContractsFragmentView.RegisterView>
-        implements BasePresenter.Register{
+        implements BasePresenter.Register {
 
-    private Router router;
+    private final Router router;
 
-    public RegisterPresenter() {
-        router = App.getAppComponent().getRouter();
+    @Inject
+    public RegisterPresenter(Router router) {
+        this.router = router;
     }
 
     @Override
-    public void nextScreen(){
+    public void nextScreen() {
         router.navigateTo(UPLOAD_SCREEN);
     }
 

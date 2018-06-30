@@ -4,13 +4,14 @@ package ru.supplyphotos.presentation.presenters;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.Disposable;
-import ru.supplyphotos.App;
 import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
+import ru.supplyphotos.tools.settings.SettingsHelper;
 import ru.terrakok.cicerone.Router;
-
 
 import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
 
@@ -22,15 +23,18 @@ import static ru.supplyphotos.constants.Constants.HEAD_SCREEN;
 public class DescriptionPresenter extends MvpPresenter<ContractsFragmentView.DescriptionView>
         implements BasePresenter.Description {
 
-    private Router router;
-    private AppRepository appRepository;
-    private SettingInterface settingInterface;
+    private final Router router;
+    private final AppRepository appRepository;
+    private final SettingInterface settingInterface;
     Disposable disposable;
 
-    public DescriptionPresenter() {
-        router = App.getAppComponent().getRouter();
-        appRepository = App.getAppComponent().getAppRepository();
-        settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
+    @Inject
+    public DescriptionPresenter(Router router,
+                                AppRepository appRepository,
+                                SettingsHelper settingsHelper) {
+        this.router = router;
+        this.settingInterface = settingsHelper.getSettingsInterface();
+        this.appRepository = appRepository;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class DescriptionPresenter extends MvpPresenter<ContractsFragmentView.Des
 
     @Override
     public void nextScreen() {
-       router.navigateTo(HEAD_SCREEN);
+        router.navigateTo(HEAD_SCREEN);
     }
 
     @Override

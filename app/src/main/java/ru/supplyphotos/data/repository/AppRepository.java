@@ -2,10 +2,11 @@ package ru.supplyphotos.data.repository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import ru.supplyphotos.App;
 import ru.supplyphotos.data.answers.category.ItemCategory;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.answers.services.ItemService;
@@ -21,12 +22,14 @@ import ru.supplyphotos.rx.RxNetwork;
 
 public class AppRepository implements BaseAppRepository.GetRepository {
 
-    private StorageManager storageManager;
-    private DataBaseSource dataBaseSource;
+    private final StorageManager storageManager;
+    private final DataBaseSource dataBaseSource;
 
-    public AppRepository() {
-        this.storageManager = App.getAppComponent().getStorageManager();
-        this.dataBaseSource = App.getAppComponent().getDataBaseSource();
+    @Inject
+    public AppRepository(StorageManager storageManager,
+                         DataBaseSource dataBaseSource) {
+        this.storageManager = storageManager;
+        this.dataBaseSource = dataBaseSource;
     }
 
     @Override

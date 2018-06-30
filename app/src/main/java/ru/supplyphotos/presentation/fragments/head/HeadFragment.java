@@ -40,9 +40,6 @@ public class HeadFragment extends MvpAppCompatFragment
     @BindView(R.id.bottom_view_bar)
     BottomNavigationView bottomBar;
 
-    private Router router = App.getAppComponent().getRouter();
-    // ДОБАВИТЬ ПРЕЗЕНТЕР В ХЭД ФРАГМЕНТ
-
 
 
     @Nullable
@@ -66,7 +63,7 @@ public class HeadFragment extends MvpAppCompatFragment
     private void initListener() {
 
         nextButton.setOnClickListener(v -> {
-             router.navigateTo(REGISTER_SCREEN);
+
         });
 
 

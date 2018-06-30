@@ -1,24 +1,17 @@
 package ru.supplyphotos.presentation.presenters;
 
 
-import android.content.Context;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
-import java.util.ArrayList;
-import java.util.List;
-import io.reactivex.disposables.CompositeDisposable;
+import javax.inject.Inject;
+
 import io.reactivex.disposables.Disposable;
-import ru.supplyphotos.App;
 import ru.supplyphotos.R;
-import ru.supplyphotos.data.answers.manuals.Guide;
 import ru.supplyphotos.data.answers.manuals.Manual;
 import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.data.resource.ResourceManager;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
-import ru.supplyphotos.rx.RxNetwork;
 import ru.terrakok.cicerone.Router;
 
 import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
@@ -31,16 +24,18 @@ import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
 public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualView> implements BasePresenter.Manual {
 
 
-    private AppRepository appRepository;
-    private ResourceManager resourceManager;
-    private Router router;
+    private final AppRepository appRepository;
+    private final ResourceManager resourceManager;
+    private final Router router;
     private Disposable disposable;
 
-    public ManualPresenter() {
-        this.router = App.getAppComponent().getRouter();
-        this.appRepository = App.getAppComponent().getAppRepository();
-        this.resourceManager = App.getAppComponent().getResourceManager();
-
+    @Inject
+    public ManualPresenter(AppRepository appRepository,
+                           ResourceManager resourceManager,
+                           Router router) {
+        this.appRepository = appRepository;
+        this.resourceManager = resourceManager;
+        this.router = router;
     }
 
     @Override
@@ -57,7 +52,7 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
         disposable.dispose();
     }
 
-    public void nextScreen(){
+    public void nextScreen() {
         router.newRootScreen(CATEGORY_SCREEN);
 
     }
@@ -69,7 +64,7 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
     }
 
     private void startViewShow(Manual manual) {
-        getViewState().startShow(manual.getData().size(),manual.getData());
+        getViewState().startShow(manual.getData().size(), manual.getData());
         getViewState().showLoading(false);
     }
 
@@ -87,8 +82,8 @@ public class ManualPresenter extends MvpPresenter<ContractsFragmentView.ManualVi
     private void handleError(Throwable throwable) {
         //Обработкой займемся поздней)
     }
-    
-    public void missManual(){
+
+    public void missManual() {
         getViewState().alertShow(resourceManager.getString(R.string.alert_show_manual_title),
                 resourceManager.getString(R.string.alert_show_manual_message),
                 resourceManager.getString(R.string.alert_show_manual_positive_button),

@@ -3,18 +3,15 @@ package ru.supplyphotos.presentation.presenters;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-import java.util.List;
-
 import io.reactivex.disposables.Disposable;
-import ru.supplyphotos.App;
-import ru.supplyphotos.data.answers.services.ItemService;
+import io.reactivex.disposables.Disposables;
 import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.presentation.adapters.ContractsAdapters;
 import ru.supplyphotos.presentation.fragments.ContractsFragmentView;
 import ru.supplyphotos.tools.settings.SettingInterface;
+import ru.supplyphotos.tools.settings.SettingsHelper;
 import ru.terrakok.cicerone.Router;
 
-import static ru.supplyphotos.constants.Constants.CATEGORY_SCREEN;
 import static ru.supplyphotos.constants.Constants.DESCRIPTION_SCREEN;
 import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 
@@ -26,18 +23,20 @@ import static ru.supplyphotos.constants.Constants.SERVICES_SCREEN;
 public class ServicePresenter extends MvpPresenter<ContractsFragmentView.ServiceView>
         implements BasePresenter.Contracts, ContractsAdapters.ItemServiceTouch {
 
-    private SettingInterface settingInterface;
-    private AppRepository appRepository;
-    private Router router;
-    private Disposable disposable;
-    private Representative representative;
+    private final SettingInterface settingInterface;
+    private final AppRepository appRepository;
+    private final Router router;
+    private Disposable disposable = Disposables.disposed();
+    private final Representative representative;
 
-    public ServicePresenter() {
-        this.settingInterface = App.getAppComponent().getSettingsHelper().getSettingsInterface();
-        this.appRepository = App.getAppComponent().getAppRepository();
-        this.router = App.getAppComponent().getRouter();
-        representative = App.getAppComponent().getRepresentative();
-       // getViewState().delegateTouchItemAdapter(this);
+    public ServicePresenter(AppRepository appRepository,
+                            Router router,
+                            SettingsHelper settingsHelper,
+                            Representative representative) {
+        this.appRepository = appRepository;
+        this.settingInterface = settingsHelper.getSettingsInterface();
+        this.router = router;
+        this.representative = representative;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class ServicePresenter extends MvpPresenter<ContractsFragmentView.Service
         representative.switchTypeScreen(SERVICES_SCREEN);
     }
 
-    private void getTestInfo(){
+    private void getTestInfo() {
         disposable = appRepository.getListService(settingInterface.getSelectedItemCategory().getId())
                 .subscribe(itemServices -> getViewState().testStart(settingInterface
                         .getSelectedItemCategory(), itemServices), this::onError);

@@ -1,11 +1,30 @@
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.23.0'
+    }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'realm-android'
 
-android {
-    compileSdkVersion setup.compileSdk
-    defaultConfig {
+//apply plugin: 'io.fabric'
 
+android {
+
+    compileSdkVersion setup.compileSdk
+    buildToolsVersion setup.buildTools
+    
+    defaultConfig {
         applicationId "ru.supplyphotos"
         vectorDrawables.useSupportLibrary = true
         buildToolsVersion setup.buildTools
@@ -20,29 +39,51 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            // Ресурсы
+            resValue "string", "app_name", "SumplyPhotos debug"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        beta {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+        }
     }
 
     compileOptions {
-        targetCompatibility setup.compileOptions
-        sourceCompatibility setup.compileOptions
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
+    
     buildToolsVersion setup.buildTools
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
+    maven {
+        url "https://maven.google.com"
+    }
 }
 
 
 dependencies {
 
+    //region modules
+
+    //Logger
+    implementation project(':logger')
+    //Local DB
+    implementation project(':localdb')
+    //endregion
+
     //region Default
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${versions.support}"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //endregion
 
@@ -91,7 +132,6 @@ dependencies {
     //butterknife
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-   
 
     //permissions
     implementation "ru.androidpirates.permissions:retriever:${versions.retriever}"

@@ -5,13 +5,10 @@ import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
-import java.util.Collections;
-import io.reactivex.Observable;
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
-import ru.supplyphotos.App;
-import ru.supplyphotos.data.db.DataBaseSource;
 import ru.supplyphotos.data.db.RealmDataBase;
 import ru.supplyphotos.data.repository.AppRepository;
 import ru.supplyphotos.presentation.adapters.ContractsAdapters;
@@ -25,14 +22,13 @@ import ru.supplyphotos.presentation.presenters.BasePresenter;
 @InjectViewState
 public class GalleryPresenter extends MvpPresenter<ContractsGalleryFragmentView.PhoneGalleryView>
                         implements BasePresenter.Gallery, ContractsAdapters.GalleryTouchManager{
-    private CompositeDisposable compositeDisposable;
-    private AppRepository appRepository;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final AppRepository appRepository;
     private RealmDataBase.UpdateTable touchManager;
 
-    public GalleryPresenter() {
-        appRepository = App.getAppComponent().getAppRepository();
-        compositeDisposable = new CompositeDisposable();
-
+    @Inject
+    public GalleryPresenter(AppRepository appRepository) {
+        this.appRepository = appRepository;
     }
 
     @Override
